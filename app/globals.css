@@ -1,42 +1,70 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-/* CUSTOM THEME */
-@theme{
-  --color-primary: #61B9EF;
-  --color-secondary: #D7F4F4;
+@custom-variant dark (&:is(.dark *));
 
-  --font-radlush: "Radlush", sans-serif;
-
-  /* FONT SIZES */
+/* THEME TOKENS ONLY */
+@theme {
+  --color-brand: #acdffd;
+  --color-brand-secondary: #d7f4f4;
 
   --text-hero: 157px;
   --leading-hero: 1;
 }
 
-
-
-/* LIGHT THEME */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-/* DARK THEME */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* GLOBAL STYLES */
+/* GLOBAL BASE STYLES */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-radlush);
-}
-.font-radlush {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smooth: always;
+}
+
+/* 🔑 APPLY RADLUSH HERE */
+html {
+  font-family: var(--font-radlush), system-ui, sans-serif;
+}
+
+/* UTILITIES */
+.showreel-blur {
+  filter: blur(6px) brightness(0.9);
+  transition: filter 350ms ease;
+}
+
+:root {
+  --accent-shadow: rgba(20, 247, 251, 0.913);
+}
+
+
+/* navlinks animations */
+.nav-text {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+
+.nav-text-inner {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-text-front,
+.nav-text-back {
+  display: block;
+  line-height: 1em;
+}
+
+.nav-text-back {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.nav-link:hover .nav-text-inner,
+.nav-link.is-active .nav-text-inner {
+  transform: translateY(-100%);
+}
+
+.nav-link:hover .nav-text-back,
+.nav-link.is-active .nav-text-back {
+  opacity: 1;
 }

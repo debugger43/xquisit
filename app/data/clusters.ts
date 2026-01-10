@@ -5,6 +5,7 @@ export type FloatItem = {
   w: number;
   h: number;
   pos: string;
+  reactive?: boolean;
 };
 
 
@@ -18,6 +19,7 @@ export const clusterLeft: FloatItem[] = [
     w: 150,
     h: 150,
     pos: "top-[14%] left-[2%]",
+    reactive: true,
   },
   {
     id: "film-reel-l",
@@ -25,6 +27,7 @@ export const clusterLeft: FloatItem[] = [
     w: 70,
     h: 71,
     pos: "top-[12%] left-[17%]",
+    reactive: true,
   },
   {
     id: "timeline-left",
@@ -32,6 +35,7 @@ export const clusterLeft: FloatItem[] = [
     w: 200,
     h: 150,
     pos: "top-[48%] left-[4%]",
+    reactive: true,
   },
 
   {
@@ -40,6 +44,7 @@ export const clusterLeft: FloatItem[] = [
     w: 45,
     h: 45,
     pos: "bottom-[24%] left-[8%]",
+    reactive: true,
   },
   {
     id: "star-yellow",
@@ -47,6 +52,7 @@ export const clusterLeft: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "bottom-[15%] left-[3%]",
+    reactive: true,
   },
 
   {
@@ -55,6 +61,7 @@ export const clusterLeft: FloatItem[] = [
     w: 44,
     h: 44,
     pos: "top-[38%] left-[11%]",
+    reactive: true,
   },
   {
     id: "vector-white-l1",
@@ -62,6 +69,7 @@ export const clusterLeft: FloatItem[] = [
     w: 40,
     h: 40,
     pos: "bottom-[15%] left-[10%]",
+    reactive: true,
   },
   {
     id: "vector-white-l2",
@@ -69,6 +77,7 @@ export const clusterLeft: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "bottom-[15%] left-[25%]",
+    reactive: true,
   },
   {
     id: "vector-cyan-l1",
@@ -76,6 +85,7 @@ export const clusterLeft: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "top-[16%] left-[14%]",
+    reactive: true,
   },
   {
     id: "vector-cyan-l2",
@@ -83,6 +93,7 @@ export const clusterLeft: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "top-[20%] left-[30%]",
+    reactive: true,
   },
 
   {
@@ -91,6 +102,7 @@ export const clusterLeft: FloatItem[] = [
     w: 42,
     h: 42,
     pos: "top-[15%] left-[47%]",
+    reactive: true,
   },
 
   {
@@ -149,20 +161,23 @@ export const clusterRight: FloatItem[] = [
     w: 135,
     h: 135,
     pos: "top-[12%] right-[28%]",
+    reactive: true,
   },
   {
     id: "textbox",
     src: "/elements/t-icon.png",
     w: 135,
     h: 135,
-    pos: "top-[12%] right-[4%]",
+    pos: "top-[15%] right-[4%]",
+    reactive: true,
   },
   {
     id: "star-cyan",
     src: "/elements/star-cyan.png",
     w: 32,
     h: 32,
-    pos: "top-[8%] right-[12%]",
+    pos: "top-[11%] right-[14%]",
+    reactive: true,
   },
 
   {
@@ -171,6 +186,7 @@ export const clusterRight: FloatItem[] = [
     w: 70,
     h: 71,
     pos: "top-[43%] right-[3%]",
+    reactive: true,
   },
   {
     id: "video-player",
@@ -178,6 +194,7 @@ export const clusterRight: FloatItem[] = [
     w: 200,
     h: 154,
     pos: "top-[48%] right-[6%]",
+    reactive: true,
   },
   {
     id: "triangle-blue",
@@ -185,6 +202,7 @@ export const clusterRight: FloatItem[] = [
     w: 45,
     h: 45,
     pos: "top-[76%] right-[4%]",
+    reactive: true,
   },
 
   {
@@ -193,6 +211,7 @@ export const clusterRight: FloatItem[] = [
     w: 44,
     h: 44,
     pos: "top-[36%] right-[14%]",
+    reactive: true,
   },
   {
     id: "circle-purple",
@@ -200,6 +219,7 @@ export const clusterRight: FloatItem[] = [
     w: 44,
     h: 44,
     pos: "bottom-[27%] right-[22%]",
+    reactive: true,
   },
 
   {
@@ -245,6 +265,7 @@ export const clusterRight: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "bottom-[22%] right-[16%]",
+    reactive: true,
   },
   {
     id: "vector-pink-r1",
@@ -252,7 +273,16 @@ export const clusterRight: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "top-[16%] right-[18%]",
+    reactive: true,
   },
+
+  {
+    id: "ellipse-pink-r",
+    src: "/elements/ellipse-pink-1.svg",
+    w: 8,
+    h: 8,
+    pos: "top-[17%] right-[43%]",
+  }
 ];
 
 
@@ -265,7 +295,8 @@ export const clusterBottom: FloatItem[] = [
     src: "/elements/Picture-Icon.png",
     w: 200,
     h: 180,
-    pos: "bottom-[14%] left-[52%]",
+    pos: "bottom-[7%] left-[54%]",
+    reactive: true,
   },
   {
     id: "music",
@@ -273,13 +304,15 @@ export const clusterBottom: FloatItem[] = [
     w: 190,
     h: 190,
     pos: "bottom-[15%] left-[27%]",
+    reactive: true,
   },
   {
     id: "music-note",
     src: "/elements/music-note.png",
     w: 100,
     h: 100,
-    pos: "bottom-[34%] left-[48%]",
+    pos: "bottom-[30%] left-[52%]",
+    reactive: true,
   },
 
   {
@@ -288,6 +321,7 @@ export const clusterBottom: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "bottom-[20%] left-[48%]",
+    reactive: true,
   },
   {
     id: "circle-cyan-btm",
@@ -295,6 +329,7 @@ export const clusterBottom: FloatItem[] = [
     w: 44,
     h: 44,
     pos: "bottom-[12%] left-[40%]",
+    reactive: true,
   },
   {
     id: "vector-purple-btm",
@@ -302,6 +337,7 @@ export const clusterBottom: FloatItem[] = [
     w: 32,
     h: 32,
     pos: "bottom-[30%] left-[42%]",
+    reactive: true,
   },
 
   {
@@ -316,7 +352,7 @@ export const clusterBottom: FloatItem[] = [
     src: "/elements/ellipse-purple-1.svg",
     w: 8,
     h: 8,
-    pos: "bottom-[14%] left-[70%]",
+    pos: "bottom-[35%] left-[64%]",
   },
 ];
 
