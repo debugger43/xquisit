@@ -19,7 +19,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 🔑 APPLY RADLUSH HERE */
+
 html {
   font-family: var(--font-radlush), system-ui, sans-serif;
 }
