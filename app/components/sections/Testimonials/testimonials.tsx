@@ -229,14 +229,14 @@ const slide2Split = new SplitType(slide2ParagraphRef.current!, {
             <div className="flex justify-center gap-10">
 
               <TestimonialCard
-                src="/elements/test_1.png"
+                src="/elements/testimonials/test_1.png"
                 ref={(el) => {
                   if (el) slide1CardsRef.current[0] = el;
                 }}
               />
 
               <TestimonialCard
-                src="/elements/test_2.png"
+                src="/elements/testimonials/test_2.png"
                 ref={(el) => {
                   if (el) slide1CardsRef.current[1] = el;
                 }}
@@ -313,14 +313,14 @@ const slide2Split = new SplitType(slide2ParagraphRef.current!, {
             <div className="flex justify-center gap-10 mt-24">
 
               <TestimonialCard
-                src="/elements/test_3.png"
+                src="/elements/testimonials/test_3.png"
                 ref={(el) => {
                   if (el) slide2CardsRef.current[0] = el;
                 }}
               />
 
               <TestimonialCard
-                src="/elements/test_4.png"
+                src="/elements/testimonials/test_4.png"
                 ref={(el) => {
                   if (el) slide2CardsRef.current[1] = el;
                 }}

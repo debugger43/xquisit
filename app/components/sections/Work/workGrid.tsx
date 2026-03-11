@@ -6,64 +6,64 @@ export default function WorkGrid() {
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-01.webp"
-          video="/elements/videos/R1C1.mp4"
+          src="/elements/works/work-01.webp"
+          video="/elements/works/videos/R1C1.mp4"
           accentColor="#6CCCCE"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-08.webp"
-          video="/works/work-08.mp4"
+          src="/elements/works/work-08.webp"
+          video="/elements/works/videos/R1C8.mp4"
           accentColor="#6CCCCE"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-02.webp"
-          video="/elements/videos/R1C2.mp4"
+          src="/elements/works/work-02.webp"
+          video="/elements/works/videos/R1C2.mp4"
           accentColor="rgb(236,231,126)"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-05.webp"
-          video="/elements/videos/R2C2.mp4"
+          src="/elements/works/work-05.webp"
+          video="/elements/works/videos/R2C2.mp4"
           accentColor="#6CCCCE"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-03.webp"
-          video="/elements/videos/R1C3.mp4"
+          src="/elements/works/work-03.webp"
+          video="/elements/works/videos/R1C3.mp4"
           accentColor="rgb(227,73,72)"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-06.webp"
-          video="/works/work-06.mp4"
+          src="/elements/works/work-06.webp"
+          video="/elements/works/videos/R1C6.mp4"
           accentColor="rgb(206,107,178)"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-04.webp"
-          video="/elements/videos/R1C4.mp4"
+          src="/elements/works/work-04.webp"
+          video="/elements/works/videos/R1C4.mp4"
           accentColor="rgb(107,206,115)"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
-          src="/elements/work-07.webp"
-          video="/works/work-07.mp4"
+          src="/elements/works/work-07.webp"
+          video="/elements/works/videos/R1C7.mp4"
           accentColor="rgb(123,107,206)"
         />
       </div>
