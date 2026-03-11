@@ -97,7 +97,7 @@ gsap.to(cards, {
       {/* GRID BACKGROUND */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
-          src="/elements/work-grid.png"
+          src="/elements/works/work-grid.png"
           alt=""
           className="w-full h-full object-cover scale-[1.2]"
         />
