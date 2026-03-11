@@ -19,7 +19,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 🔑 APPLY RADLUSH HERE */
+
 html {
   font-family: var(--font-radlush), system-ui, sans-serif;
 }
@@ -69,6 +69,7 @@ html {
   opacity: 1;
 }
 
+
 /* text-stroke */
 
 .text-stroke-white {
@@ -88,3 +89,4 @@ html {
 body {
   cursor: none;
 }
+
