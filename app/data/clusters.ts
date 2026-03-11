@@ -47,8 +47,8 @@ export const clusterLeft: FloatItem[] = [
     reactive: true,
   },
   {
-    id: "star-yellow",
-    src: "/elements/star-yellow.png",
+    id: "star-blue",
+    src: "/elements/star-blue.png",
     w: 32,
     h: 32,
     pos: "bottom-[15%] left-[3%]",
@@ -66,8 +66,8 @@ export const clusterLeft: FloatItem[] = [
   {
     id: "vector-white-l1",
     src: "/elements/vector-white-1.svg",
-    w: 40,
-    h: 40,
+    w: 38,
+    h: 38,
     pos: "bottom-[15%] left-[10%]",
     reactive: true,
   },
@@ -76,7 +76,7 @@ export const clusterLeft: FloatItem[] = [
     src: "/elements/vector-white-2.svg",
     w: 32,
     h: 32,
-    pos: "bottom-[15%] left-[25%]",
+    pos: "bottom-[12%] left-[27%]",
     reactive: true,
   },
   {
@@ -185,15 +185,15 @@ export const clusterRight: FloatItem[] = [
     src: "/elements/film-reel-3.png",
     w: 70,
     h: 71,
-    pos: "top-[43%] right-[3%]",
+    pos: "top-[35%] right-[3%]",
     reactive: true,
   },
   {
     id: "video-player",
     src: "/elements/video-player.png",
-    w: 200,
-    h: 154,
-    pos: "top-[48%] right-[6%]",
+    w: 300,
+    h: 280,
+    pos: "top-[42%] right-[0%]",
     reactive: true,
   },
   {
@@ -301,17 +301,17 @@ export const clusterBottom: FloatItem[] = [
   {
     id: "music",
     src: "/elements/music.png",
-    w: 190,
-    h: 190,
-    pos: "bottom-[15%] left-[27%]",
+    w: 192,
+    h: 192,
+    pos: "bottom-[13%] left-[27%]",
     reactive: true,
   },
   {
     id: "music-note",
     src: "/elements/music-note.png",
-    w: 100,
-    h: 100,
-    pos: "bottom-[30%] left-[52%]",
+    w: 80,
+    h: 80,
+    pos: "bottom-[32%] left-[52%]",
     reactive: true,
   },
 
@@ -326,9 +326,9 @@ export const clusterBottom: FloatItem[] = [
   {
     id: "circle-cyan-btm",
     src: "/elements/circle-cyan.svg",
-    w: 44,
-    h: 44,
-    pos: "bottom-[12%] left-[40%]",
+    w: 47,
+    h: 47,
+    pos: "bottom-[12%] left-[42%]",
     reactive: true,
   },
   {
@@ -336,7 +336,7 @@ export const clusterBottom: FloatItem[] = [
     src: "/elements/vector-purple.svg",
     w: 32,
     h: 32,
-    pos: "bottom-[30%] left-[42%]",
+    pos: "bottom-[31%] left-[44%]",
     reactive: true,
   },
 
@@ -345,14 +345,14 @@ export const clusterBottom: FloatItem[] = [
     src: "/elements/ellipse-green-1.svg",
     w: 8,
     h: 8,
-    pos: "bottom-[38%] left-[36%]",
+    pos: "bottom-[38%] left-[37%]",
   },
   {
     id: "ellipse-purple-b1",
     src: "/elements/ellipse-purple-1.svg",
     w: 8,
     h: 8,
-    pos: "bottom-[35%] left-[64%]",
+    pos: "bottom-[37%] left-[62%]",
   },
 ];
 

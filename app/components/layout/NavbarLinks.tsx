@@ -61,7 +61,7 @@ export default function NavbarLinks() {
       });
     }
 
-    // CLICK → SCROLL + URL
+    // SCROLL + URL
     links.forEach((link, index) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -85,7 +85,7 @@ export default function NavbarLinks() {
       });
     });
 
-    // HOVER (TEMPORARY)
+    // Temporary hover effect
     links.forEach((link, index) => {
       link.addEventListener("mouseenter", () => {
         if (isClickScrolling.current) return;
@@ -97,7 +97,7 @@ export default function NavbarLinks() {
       movePill(activeIndex.current);
     });
 
-    // HERO (SPECIAL)
+    // HERO 
     ScrollTrigger.create({
       trigger: "#hero",
       start: "top top+=80",

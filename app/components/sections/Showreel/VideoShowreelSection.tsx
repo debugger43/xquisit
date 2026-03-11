@@ -16,12 +16,8 @@ export default function VideoShowreelSection() {
   const playRef = useRef<HTMLDivElement | null>(null);
   const cornerLeftRef = useRef<SVGPathElement | null>(null);
   const cornerRightRef = useRef<SVGPathElement | null>(null);
-  const decoRefs = useRef<HTMLDivElement[]>([]);
 
   useLayoutEffect(() => {
-    /* ======================================================
-       🔒 HARD SCROLL RESET (RELOAD-SAFE)
-       ====================================================== */
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
@@ -69,7 +65,7 @@ export default function VideoShowreelSection() {
         }
 
         /* --------------------------------
-           MEDIA FADE + BLUR RESOLVE
+           MEDIA FADE + BLUR ON SCROLL
         -------------------------------- */
         if (mediaRef.current && sectionRef.current) {
           gsap.set(mediaRef.current, {
@@ -86,7 +82,6 @@ export default function VideoShowreelSection() {
               start: "top bottom",
               end: "top center",
               scrub: 1.2,
-              
             },
           });
         }
@@ -102,69 +97,83 @@ export default function VideoShowreelSection() {
         }
 
         /* --------------------------------
-           BACKGROUND CURVE DRAW
+           SYNCHRONIZED CURVE + CORNERS + PLAY
         -------------------------------- */
-        if (curvePathRef.current && sectionRef.current && playRef.current) {
-          const length = curvePathRef.current.getTotalLength();
+        if (
+          curvePathRef.current &&
+          sectionRef.current &&
+          playRef.current &&
+          cornerLeftRef.current &&
+          cornerRightRef.current
+        ) {
+          const bigLength = curvePathRef.current.getTotalLength();
+          const leftLength = cornerLeftRef.current.getTotalLength();
+          const rightLength = cornerRightRef.current.getTotalLength();
 
           gsap.set(curvePathRef.current, {
-            strokeDasharray: length,
-            strokeDashoffset: length,
+            strokeDasharray: bigLength,
+            strokeDashoffset: bigLength,
           });
 
-          if (cornerLeftRef.current && cornerRightRef.current) {
-            gsap.set([cornerLeftRef.current, cornerRightRef.current], {
-              opacity: 0,
-            });
-          }
+          gsap.set([cornerLeftRef.current, cornerRightRef.current], {
+            strokeDasharray: (i: number) =>
+              i === 0 ? leftLength : rightLength,
+            strokeDashoffset: (i: number) =>
+              i === 0 ? leftLength : rightLength,
+            opacity: 1,
+          });
 
-          gsap.to(curvePathRef.current, {
-            strokeDashoffset: 0,
-            duration: 8,
-            ease: "sine.out",
+          const tl = gsap.timeline({
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 20%",
               once: true,
             },
-            onComplete: () => {
-              const left = cornerLeftRef.current;
-              const right = cornerRightRef.current;
-
-              if (left && right) {
-                const leftLen = left.getTotalLength();
-                const rightLen = right.getTotalLength();
-
-                gsap.set([left, right], {
-                  strokeDasharray: (i: number) => (i === 0 ? leftLen : rightLen),
-                  strokeDashoffset: (i: number) => (i === 0 ? leftLen : rightLen),
-                });
-
-                gsap.to(left, {
-                  opacity: 1,
-                  strokeDashoffset: 0,
-                  duration: 1.5,
-                  ease: "sine.out",
-                });
-
-                gsap.to(right, {
-                  opacity: 1,
-                  strokeDashoffset: 0,
-                  duration: 1.5,
-                  ease: "sine.out",
-                  delay: 0.18,
-                });
-              }
-
-              gsap.to(playRef.current, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.5,
-                ease: "back.out(1.7)",
-                delay: 0.05,
-              });
-            },
           });
+
+          // Big curve draw
+          tl.to(
+            curvePathRef.current,
+            {
+              strokeDashoffset: 0,
+              duration: 8,
+              ease: "sine.out",
+            },
+            0
+          );
+
+          // Corner curves draw
+          tl.to(
+            cornerLeftRef.current,
+            {
+              strokeDashoffset: 0,
+              duration: 1.5,
+              ease: "sine.out",
+            },
+            0
+          );
+
+          tl.to(
+            cornerRightRef.current,
+            {
+              strokeDashoffset: 0,
+              duration: 1.5,
+              ease: "sine.out",
+            },
+            0
+          );
+
+          // Play button appear
+          tl.to(
+            playRef.current,
+            {
+              opacity: 1,
+              scale: 1,
+              duration: 0.5,
+              ease: "back.out(1.7)",
+            },
+            0
+          );
         }
 
         /* --------------------------------
@@ -199,7 +208,6 @@ export default function VideoShowreelSection() {
           });
         }
 
-        
         ScrollTrigger.refresh();
       }, sectionRef);
 
@@ -211,29 +219,77 @@ export default function VideoShowreelSection() {
     <section
       ref={sectionRef}
       id="showreel"
+      data-cursor="orange"
       className="relative min-h-screen w-full bg-[#a3d4f3] flex items-center justify-center overflow-hidden"
     >
-            {/* DECORATIVE ELEMENTS */}
-      {/* {[
-        { src: "/elements/showreel-star.png", x: "12%", y: "22%", w: 80 },
-        { src: "/elements/showreel-triangle.png", x: "78%", y: "16%", w: 90 },
-        { src: "/elements/showreel-filmreel.png", x: "20%", y: "78%", w: 100 },
-        { src: "/elements/showreel-ellipse.png", x: "82%", y: "70%", w: 70 },
-        { src: "/elements/showreel-circle.png", x: "48%", y: "10%", w: 60 },
-      ].map((d, i) => (
-        <div
-          key={i}
-          ref={(el) => {el && (decoRefs.current[i] = el)}}
-          className="absolute pointer-events-none"
-          style={{ left: d.x, top: d.y }}
-        >
-          <Image src={d.src} alt="" width={d.w} height={d.w} />
-        </div>
-      ))} */}
 
       
+{/* DECORATIVE ELEMENTS */}
+<div className="absolute inset-0 z-0 pointer-events-none">
 
-         {/* BACKGROUND CURVE */}
+  <div className="w-full h-full grid grid-cols-12 grid-rows-6">
+
+    
+   {/* Star */}
+<div className="col-start-7 row-start-1 self-start justify-self-center">
+  <Image
+    src="/elements/showreel-star.png"
+    alt=""
+    width={80}
+    height={80}
+    className="w-10 sm:w-14 lg:w-20 h-auto"
+  />
+</div>
+
+   {/* Triangle */}
+<div className="col-start-12 row-start-4 self-start justify-self-end">
+  <Image
+    src="/elements/showreel-triangle.png"
+    alt=""
+    width={90}
+    height={90}
+    className="w-12 sm:w-16 lg:w-24 h-auto"
+  />
+</div>
+
+    {/* Film Reel */}
+<div className="col-start-12 row-start-1 self-start justify-self-end">
+  <Image
+    src="/elements/showreel-filmreel.png"
+    alt=""
+    width={100}
+    height={100}
+    className="w-14 sm:w-18 lg:w-24 h-auto"
+  />
+</div>
+
+    {/* Ellipse */}
+    <div className="col-start-10 row-start-5 self-end justify-self-end">
+      <Image
+        src="/elements/showreel-ellipse.png"
+        alt=""
+        width={70}
+        height={70}
+        className="w-10 sm:w-14 lg:w-16 h-auto"
+      />
+    </div>
+
+{/* Circle */}
+<div className="absolute left-0 bottom-0 sm:bottom-0 lg:bottom-0">
+  <Image
+    src="/elements/showreel-circle.png"
+    alt=""
+    width={60}
+    height={60}
+    className="w-8 sm:w-12 lg:w-16 h-auto"
+  />
+</div>
+
+  </div>
+</div>
+      
+
+               {/* BACKGROUND CURVE */}
       <svg
         className="absolute inset-0 z-0 pointer-events-none"
         viewBox="0 0 1920 1080"
@@ -287,6 +343,8 @@ export default function VideoShowreelSection() {
       </svg>
 
       {/* SHOWREEL FRAME */}
+   
+    
       <div
         ref={frameRef}
         id="showreel-frame"
@@ -326,7 +384,7 @@ export default function VideoShowreelSection() {
             ref={cornerLeftRef}
             d="M0 2.5C0 2.5 100 2.5 123 2.5C162 2.5 193.5 34.3 193.5 69.5C193.5 111.5 193.5 202.5 193.5 202.5"
             stroke="#000"
-            strokeWidth="5"
+            strokeWidth="4"
           />
         </svg>
 
@@ -342,7 +400,7 @@ export default function VideoShowreelSection() {
             ref={cornerRightRef}
             d="M0 2.5C0 2.5 100 2.5 123 2.5C162 2.5 193.5 34.3 193.5 69.5C193.5 111.5 193.5 202.5 193.5 202.5"
             stroke="#000"
-            strokeWidth="5"
+            strokeWidth="4"
           />
         </svg>
 
@@ -365,3 +423,5 @@ export default function VideoShowreelSection() {
     </section>
   );
 }
+
+      

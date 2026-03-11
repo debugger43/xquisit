@@ -68,3 +68,23 @@ html {
 .nav-link.is-active .nav-text-back {
   opacity: 1;
 }
+
+/* text-stroke */
+
+.text-stroke-white {
+  -webkit-text-stroke: 2px white;
+  text-stroke: 2px white; /* fallback */
+}
+
+.word {
+  display: inline-block;
+}
+
+.char {
+  display: inline-block;
+  will-change: transform;
+}
+
+body {
+  cursor: none;
+}

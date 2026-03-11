@@ -5,6 +5,8 @@ import Navbar from "@/app/components/layout/Navbar";
 import dynamic from "next/dynamic";
 import WorkSection from "@/app/components/sections/Work/worksection";
 import Testimonials from "@/app/components/sections/Testimonials/testimonials";
+import MobileNav from "./components/layout/MobileDrawer";
+import LottieSection from "@/app/components/sections/lottieSection/LottieSection";
 
 const VideoShowreelSection = dynamic(
   () => import("@/app/components/sections/Showreel/VideoShowreelSection"),
@@ -15,6 +17,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      {/* <MobileNav /> */}
 
       <section id="home">
         <Hero />
@@ -30,9 +33,9 @@ export default function Home() {
       <section id="testimonials"> 
         <Testimonials />
       </section>
-     <section className="h-screen bg-black" />
+     
     
-
+      <LottieSection />
     </>
   );
 }

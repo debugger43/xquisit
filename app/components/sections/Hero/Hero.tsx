@@ -3,14 +3,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import FloatingElement from "@/app/components/ui/floatingElements";
-import {
-  clusterLeft,
-  clusterRight,
-  clusterBottom,
-} from "@/app/data/clusters";
+import { clusterLeft, clusterRight, clusterBottom } from "@/app/data/clusters";
 
 export default function Hero() {
-  const textRef = useRef<HTMLImageElement | null>(null);
+  const textRef = useRef<HTMLDivElement | null>(null);
   const floatRefs = useRef<HTMLDivElement[]>([]);
   const staticRefs = useRef<HTMLDivElement[]>([]);
   const navbarRef = useRef<HTMLElement | null>(null);
@@ -27,7 +23,7 @@ export default function Hero() {
     navbarRef.current = document.querySelector("[data-navbar]");
 
     /* -------------------------------
-       IDLE FLOAT (ONE TIME)
+       IDLE FLOAT ANIMATION
     -------------------------------- */
     const startIdleFloat = (inner: HTMLElement, index: number) => {
       if (idleTweens.current.has(inner)) return;
@@ -44,14 +40,16 @@ export default function Hero() {
     };
 
     /* -------------------------------
-       PROXIMITY UPDATE (TICKER)
+       PROXIMITY ANIMATION 
     -------------------------------- */
     const updateProximity = () => {
       floatRefs.current.forEach((el, index) => {
         if (!el) return;
 
-        const inner = el.querySelector(".float-inner") as HTMLElement | null;
-        if (!inner) return;
+        const proximityInner = el.querySelector(
+          ".proximity-inner",
+        ) as HTMLElement | null;
+        if (!proximityInner) return;
 
         const rect = el.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
@@ -62,14 +60,14 @@ export default function Hero() {
         const distance = Math.hypot(dx, dy);
         const maxDistance = 150;
 
-        const wasNear = isNearMap.current.get(inner) ?? false;
+        const wasNear = isNearMap.current.get(proximityInner) ?? false;
         const isNear = distance < maxDistance;
 
-        isNearMap.current.set(inner, isNear);
+        isNearMap.current.set(proximityInner, isNear);
 
         if (!isNear) {
           if (wasNear) {
-            gsap.to(inner, {
+            gsap.to(proximityInner, {
               x: 0,
               duration: 0.4,
               ease: "power3.out",
@@ -79,8 +77,7 @@ export default function Hero() {
         }
 
         const strength = (1 - distance / maxDistance) * 10;
-
-        gsap.to(inner, {
+        gsap.to(proximityInner, {
           x: dx * 0.008 * strength,
           y: dy * 0.008 * strength,
           duration: 0.45,
@@ -90,9 +87,6 @@ export default function Hero() {
       });
     };
 
-    /* -------------------------------
-       MOUSE TRACKING
-    -------------------------------- */
     const handleMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
@@ -112,28 +106,53 @@ export default function Hero() {
 
     tl.to({}, { duration: 1 });
 
-    tl.fromTo(
-      textRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.8 }
+    const words = textRef.current.querySelectorAll("span");
+
+    const line1Words = Array.from(words).slice(0, 2);
+    const line2Words = Array.from(words).slice(2);
+
+    gsap.set(words, {
+      opacity: 0,
+      y: 38,
+      filter: "blur(8px)",
+    });
+
+    tl.to(line1Words, {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      duration: 1,
+      ease: "power3.out",
+      stagger: 0.06,
+    });
+
+    tl.to(
+      line2Words,
+      {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.12,
+      },
+      "-=0.6",
     );
 
-    tl.fromTo(
-      textRef.current,
-      { y: 20 },
-      { y: -45, duration: 1.4 }
-    );
 
     if (navbarRef.current) {
       tl.fromTo(
         navbarRef.current,
         { opacity: 0, y: -16 },
-        { opacity: 1, y: 0, duration: 0.9, ease: "sine.out" }
+        { opacity: 1, y: 0, duration: 0.9, ease: "sine.out" },
       );
     }
 
     tl.to({}, { duration: 0.6 });
 
+    /* -------------------------------
+       FLOATING ELEMENTS ENTRY
+    -------------------------------- */
     tl.fromTo(
       floatRefs.current,
       {
@@ -147,10 +166,10 @@ export default function Hero() {
         y: 0,
         scale: 1,
         rotation: 0,
-        duration: 1.9,
-        stagger: 0.09,
+        duration: 0.65,
+        ease: "power3.out",
       },
-      "-=0.3"
+      "-=0.3",
     );
 
     tl.set(floatRefs.current, { clearProps: "transform" });
@@ -163,11 +182,11 @@ export default function Hero() {
         stagger: 0.04,
         ease: "power2.out",
       },
-      "+=0.1"
+      "+=0.1",
     );
 
     /* -------------------------------
-       START IDLE FLOAT
+       START IDLE FLOAT FOR REACTIVE ELEMENTS
     -------------------------------- */
     floatRefs.current.forEach((el, i) => {
       const inner = el.querySelector(".float-inner");
@@ -186,22 +205,42 @@ export default function Hero() {
   return (
     <section
       id="hero"
+      data-cursor="green"
       className="relative w-full h-screen bg-black flex items-center justify-center overflow-hidden"
     >
-      {/* 🔑 STABLE HERO SCROLL ANCHOR */}
-      <span
-        id="hero-anchor"
-        aria-hidden
-        className="absolute top-0 left-0"
-      />
+      <span id="hero-anchor" aria-hidden className="absolute top-0 left-0" />
 
-      <img
+      
+      <div
         ref={textRef}
-        src="/elements/hero-text.svg"
-        alt="Beyond Screens Into Your Heart"
-        className="w-[70vw] max-w-[1335px] z-[10] pointer-events-none"
-        draggable={false}
-      />
+        className="z-[100] text-center pointer-events-none select-none -translate-y-[45px]"
+      >
+        <h1 className="font-[900] tracking-[-0.01em] leading-[0.95]">
+
+  <span className="block whitespace-nowrap">
+    {"BEYOND SCREENS".split(" ").map((word, i) => (
+      <span
+        key={i}
+        className="inline-block mr-[0.35em] text-white text-[clamp(36px,9vw,120px)]"
+      >
+        {word}
+      </span>
+    ))}
+  </span>
+
+  <span className="block whitespace-nowrap">
+    {"INTO YOUR HEART".split(" ").map((word, i) => (
+      <span
+        key={i}
+        className="inline-block mr-[0.35em] text-[#bfe3ff] text-[clamp(36px,9vw,120px)]"
+      >
+        {word}
+      </span>
+    ))}
+  </span>
+
+</h1>
+      </div>
 
       {staticItems.map((item, i) => (
         <FloatingElement

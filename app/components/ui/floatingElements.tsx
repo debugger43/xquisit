@@ -18,17 +18,22 @@ export default function FloatingElement({
   return (
     <div
       ref={innerRef}
-      className={`absolute pointer-events-none select-none ${className}`}
+      className={`absolute pointer-events-none select-none scale-[0.7] sm:scale-100 ${className}`}
       style={{ width, height }}
     >
-      {/* Inner wrapper floats safely */}
+      {/* Idle Layer */}
       <div className="float-inner w-full h-full">
-        <img
-          src={src}
-          alt=""
-          draggable={false}
-          className="w-full h-full object-contain block"
-        />
+        
+        {/* Proximity Layer */}
+        <div className="proximity-inner w-full h-full">
+          <img
+            src={src}
+            alt=""
+            draggable={false}
+            className="w-full h-full object-contain block"
+          />
+        </div>
+
       </div>
     </div>
   );

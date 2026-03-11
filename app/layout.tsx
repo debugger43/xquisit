@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { radlush } from "./fonts";
+import DynamicCursor from "@/app/components/ui/DynamicCursor";
 
 export const metadata: Metadata = {
   title: "XQUISit",
@@ -16,6 +17,7 @@ export default function RootLayout({
    <html lang="en" className={radlush.variable}>
      <body className="antialiased">
         {children}
+        <DynamicCursor />
       </body>
     </html>
   );
