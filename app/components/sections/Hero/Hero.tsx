@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import FloatingElement from "@/app/components/ui/floatingElements";
 import { clusterLeft, clusterRight, clusterBottom } from "@/app/data/clusters";
@@ -19,7 +19,9 @@ export default function Hero() {
   const reactiveItems = allItems.filter((i) => i.reactive);
   const staticItems = allItems.filter((i) => !i.reactive);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+
+
     navbarRef.current = document.querySelector("[data-navbar]");
 
     /* -------------------------------
@@ -194,6 +196,7 @@ export default function Hero() {
     });
 
     return () => {
+     
       window.removeEventListener("mousemove", handleMouseMove);
       gsap.ticker.remove(updateProximity);
       tl.kill();
@@ -206,17 +209,17 @@ export default function Hero() {
     <section
       id="hero"
       data-cursor="green"
-      className="relative w-full h-screen bg-black flex items-center justify-center overflow-hidden"
-    >
+      className="relative w-full h-[var(--app-height)] overflow-hidden bg-black">
+    
       <span id="hero-anchor" aria-hidden className="absolute top-0 left-0" />
 
       
       <div
         ref={textRef}
-        className="z-[100] text-center pointer-events-none select-none -translate-y-[45px]"
+   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%+45px)] z-[100] text-center pointer-events-none select-none"
       >
         <h1 className="font-[900] tracking-[-0.01em] leading-[0.95]">
-
+    
   <span className="block whitespace-nowrap">
     {"BEYOND SCREENS".split(" ").map((word, i) => (
       <span
@@ -249,7 +252,7 @@ export default function Hero() {
           src={item.src}
           width={item.w}
           height={item.h}
-          className={`${item.pos} absolute z-[15]`}
+          className={`${item.pos} absolute z-[15] shrink-0`}
         />
       ))}
 
@@ -260,7 +263,7 @@ export default function Hero() {
           src={item.src}
           width={item.w}
           height={item.h}
-          className={`${item.pos} absolute z-[5]`}
+          className={`${item.pos} absolute z-[5] shrink-0`}
         />
       ))}
     </section>

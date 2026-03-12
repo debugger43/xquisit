@@ -92,7 +92,7 @@ gsap.to(cards, {
   return (
     <section 
     data-cursor="green"
-    className="relative h-screen w-full overflow-hidden bg-black">
+    className="relative h-[var(--app-height)] w-full overflow-hidden bg-black">
 
       {/* GRID BACKGROUND */}
       <div className="absolute inset-0 z-0 pointer-events-none">

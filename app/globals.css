@@ -11,6 +11,14 @@
   --text-hero: 157px;
   --leading-hero: 1;
 }
+:root {
+  --app-height: 100svh;
+  --accent-shadow: rgba(20, 247, 251, 0.913);
+}
+
+* {
+  min-width: 0;
+}
 
 /* GLOBAL BASE STYLES */
 html,
@@ -30,9 +38,7 @@ html {
   transition: filter 350ms ease;
 }
 
-:root {
-  --accent-shadow: rgba(20, 247, 251, 0.913);
-}
+
 
 
 /* navlinks animations */

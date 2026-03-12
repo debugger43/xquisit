@@ -19,7 +19,10 @@ export default function FloatingElement({
     <div
       ref={innerRef}
       className={`absolute pointer-events-none select-none scale-[0.7] sm:scale-100 ${className}`}
-      style={{ width, height }}
+      style={{
+        width: `clamp(${width * 0.5}px, ${width / 12}vw, ${width}px)`,
+        height: "auto",
+      }}
     >
       {/* Idle Layer */}
       <div className="float-inner w-full h-full">

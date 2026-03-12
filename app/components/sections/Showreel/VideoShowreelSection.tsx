@@ -131,7 +131,6 @@ export default function VideoShowreelSection() {
             },
           });
 
-          // Big curve draw
           tl.to(
             curvePathRef.current,
             {
@@ -142,7 +141,6 @@ export default function VideoShowreelSection() {
             0
           );
 
-          // Corner curves draw
           tl.to(
             cornerLeftRef.current,
             {
@@ -163,7 +161,6 @@ export default function VideoShowreelSection() {
             0
           );
 
-          // Play button appear
           tl.to(
             playRef.current,
             {
@@ -220,16 +217,14 @@ export default function VideoShowreelSection() {
       ref={sectionRef}
       id="showreel"
       data-cursor="orange"
-      className="relative min-h-screen w-full bg-[#a3d4f3] flex items-center justify-center overflow-hidden"
+      className="relative h-[var(--app-height)] w-full bg-[#a3d4f3] overflow-hidden"
     >
 
-      
 {/* DECORATIVE ELEMENTS */}
 <div className="absolute inset-0 z-0 pointer-events-none">
 
   <div className="w-full h-full grid grid-cols-12 grid-rows-6">
 
-    
    {/* Star */}
 <div className="col-start-7 row-start-1 self-start justify-self-center">
   <Image
@@ -287,141 +282,142 @@ export default function VideoShowreelSection() {
 
   </div>
 </div>
-      
 
-               {/* BACKGROUND CURVE */}
-      <svg
-        className="absolute inset-0 z-0 pointer-events-none"
-        viewBox="0 0 1920 1080"
-        preserveAspectRatio="xMidYMid meet"
-        style={{
-          width: "2950px",
-          transform: "rotate(0.75deg) scale(1.01)",
-          transformOrigin: "center",
-        }}
-      >
-        <defs>
-          <filter
-            id="curveBlur"
-            x="-20%"
-            y="-20%"
-            width="140%"
-            height="140%"
-            filterUnits="userSpaceOnUse"
-            colorInterpolationFilters="sRGB"
-          >
-            <feGaussianBlur stdDeviation="2" />
-          </filter>
+{/* BACKGROUND CURVE */}
+<svg
+  className="absolute inset-0 z-0 pointer-events-none"
+  viewBox="0 0 1920 1080"
+  preserveAspectRatio="xMidYMid meet"
+  style={{
+    width: "2950px",
+    transform: "rotate(0.75deg) scale(1.01)",
+    transformOrigin: "center",
+  }}
+>
+  <defs>
+    <filter
+      id="curveBlur"
+      x="-20%"
+      y="-20%"
+      width="140%"
+      height="140%"
+      filterUnits="userSpaceOnUse"
+      colorInterpolationFilters="sRGB"
+    >
+      <feGaussianBlur stdDeviation="2" />
+    </filter>
 
-          <linearGradient
-            id="showreelGradient"
-            x1="1088.75"
-            y1="-70"
-            x2="1088.75"
-            y2="1079.73"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0%" stopColor="#8F91F2" />
-            <stop offset="100%" stopColor="#272974" />
-          </linearGradient>
-        </defs>
+    <linearGradient
+      id="showreelGradient"
+      x1="1088.75"
+      y1="-70"
+      x2="1088.75"
+      y2="1079.73"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0%" stopColor="#8F91F2" />
+      <stop offset="100%" stopColor="#272974" />
+    </linearGradient>
+  </defs>
 
-        <g filter="url(#curveBlur)">
-          <path
-            ref={curvePathRef}
-            d="M-86 -70
+  <g filter="url(#curveBlur)">
+    <path
+      ref={curvePathRef}
+      d="M-86 -70
          C5.71 66.67 240 341.8 410 289
          C580 236.2 983.17 645.67 1163.5 857
          C1243.33 968.5 1478.3 1161.6 1779.5 1042
          C2080.7 922.4 2227.67 978.5 2263.5 1021.5"
-            fill="none"
-            stroke="url(#showreelGradient)"
-            strokeWidth="19"
-            strokeLinecap="round"
-          />
-        </g>
-      </svg>
+      fill="none"
+      stroke="url(#showreelGradient)"
+      strokeWidth="19"
+      strokeLinecap="round"
+    />
+  </g>
+</svg>
 
-      {/* SHOWREEL FRAME */}
-   
-    
-      <div
-        ref={frameRef}
-        id="showreel-frame"
-        className="relative z-10 w-[min(78vw,1360px)] aspect-video rounded-[25px] bg-white p-[8px] shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
+{/* CENTER WRAPPER */}
+<div className="absolute inset-0 flex items-center justify-center">
+
+{/* SHOWREEL FRAME */}
+<div
+  ref={frameRef}
+  id="showreel-frame"
+  className="relative z-10 w-[min(78vw,1360px)] aspect-video rounded-[25px] bg-white p-[8px] shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
+>
+  <div className="relative w-full h-full rounded-[18px] overflow-hidden">
+    {/* POSTER */}
+    <div ref={mediaRef} className="absolute inset-0">
+      <Image
+        src="/elements/showreel-poster.png"
+        alt="Showreel"
+        fill
+        priority
+        className="object-cover blur-[10px] scale-[1.05]"
+      />
+    </div>
+
+    {/* VIDEO */}
+    <video
+      ref={videoRef}
+      className="absolute inset-0 w-full h-full object-cover opacity-0"
+      src="/elements/showreel.mp4"
+      playsInline
+      controls
+    />
+  </div>
+
+  {/* CORNER CURVE — BOTTOM LEFT */}
+  <svg
+    className="absolute -bottom-6 -left-6 rotate-180 pointer-events-none"
+    width="166"
+    height="173"
+    viewBox="0 0 196 203"
+    fill="none"
+  >
+    <path
+      ref={cornerLeftRef}
+      d="M0 2.5C0 2.5 100 2.5 123 2.5C162 2.5 193.5 34.3 193.5 69.5C193.5 111.5 193.5 202.5 193.5 202.5"
+      stroke="#000"
+      strokeWidth="4"
+    />
+  </svg>
+
+  {/* CORNER CURVE — TOP RIGHT */}
+  <svg
+    className="absolute -top-6 -right-6  pointer-events-none"
+    width="166"
+    height="173"
+    viewBox="0 0 196 203"
+    fill="none"
+  >
+    <path
+      ref={cornerRightRef}
+      d="M0 2.5C0 2.5 100 2.5 123 2.5C162 2.5 193.5 34.3 193.5 69.5C193.5 111.5 193.5 202.5 193.5 202.5"
+      stroke="#000"
+      strokeWidth="4"
+    />
+  </svg>
+
+  {/* PLAY BUTTON */}
+  <div ref={playRef} className="absolute inset-0 grid place-items-center">
+    <div className="w-24 h-24 rounded-2xl bg-[#4c4dda] grid place-items-center cursor-pointer transition-transform duration-250 ease-out hover:scale-[1.08]">
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 0 24 24"
+        fill="white"
+        className="translate-x-[2px]"
       >
-        <div className="relative w-full h-full rounded-[18px] overflow-hidden">
-          {/* POSTER */}
-          <div ref={mediaRef} className="absolute inset-0">
-            <Image
-              src="/elements/showreel-poster.png"
-              alt="Showreel"
-              fill
-              priority
-              className="object-cover blur-[10px] scale-[1.05]"
-            />
-          </div>
+        <path d="M7 4v16l12-8z" />
+      </svg>
+    </div>
+  </div>
 
-          {/* VIDEO */}
-          <video
-            ref={videoRef}
-            className="absolute inset-0 w-full h-full object-cover opacity-0"
-            src="/elements/showreel.mp4"
-            playsInline
-            controls
-          />
-        </div>
+</div>
 
-        {/* CORNER CURVE — BOTTOM LEFT */}
-        <svg
-          className="absolute -bottom-6 -left-6 rotate-180 pointer-events-none"
-          width="166"
-          height="173"
-          viewBox="0 0 196 203"
-          fill="none"
-        >
-          <path
-            ref={cornerLeftRef}
-            d="M0 2.5C0 2.5 100 2.5 123 2.5C162 2.5 193.5 34.3 193.5 69.5C193.5 111.5 193.5 202.5 193.5 202.5"
-            stroke="#000"
-            strokeWidth="4"
-          />
-        </svg>
+</div>
 
-        {/* CORNER CURVE — TOP RIGHT */}
-        <svg
-          className="absolute -top-6 -right-6  pointer-events-none"
-          width="166"
-          height="173"
-          viewBox="0 0 196 203"
-          fill="none"
-        >
-          <path
-            ref={cornerRightRef}
-            d="M0 2.5C0 2.5 100 2.5 123 2.5C162 2.5 193.5 34.3 193.5 69.5C193.5 111.5 193.5 202.5 193.5 202.5"
-            stroke="#000"
-            strokeWidth="4"
-          />
-        </svg>
-
-        {/* PLAY BUTTON */}
-        <div ref={playRef} className="absolute inset-0 grid place-items-center">
-         <div className="w-24 h-24 rounded-2xl bg-[#4c4dda] grid place-items-center cursor-pointer transition-transform duration-250 ease-out hover:scale-[1.08]">
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="white"
-              className="translate-x-[2px]"
-            >
-              <path d="M7 4v16l12-8z" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-    </section>
+</section>
   );
 }
-
-      
