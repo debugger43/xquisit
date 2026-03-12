@@ -16,6 +16,8 @@ export default function DynamicCursor() {
 
   const [cursorColor, setCursorColor] = useState("orange");
   const colorRef = useRef("orange");
+  const currentColor = useRef({ r: 255, g: 152, b: 96 });
+  const targetColor = useRef({ r: 255, g: 152, b: 96 });
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -42,6 +44,13 @@ export default function DynamicCursor() {
 
         if (color && color !== colorRef.current) {
           colorRef.current = color;
+
+          if (color === "green") {
+            targetColor.current = { r: 139, g: 229, b: 178 };
+          } else {
+            targetColor.current = { r: 255, g: 152, b: 96 };
+          }
+
           setCursorColor(color);
         }
       }
@@ -59,22 +68,30 @@ export default function DynamicCursor() {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      const speed = 0.08;
+
+      currentColor.current.r +=
+        (targetColor.current.r - currentColor.current.r) * speed;
+
+      currentColor.current.g +=
+        (targetColor.current.g - currentColor.current.g) * speed;
+
+      currentColor.current.b +=
+        (targetColor.current.b - currentColor.current.b) * speed;
+
       const tipX = mouse.current.x;
       const tipY = mouse.current.y + 5;
 
       let prev = { x: tipX, y: tipY };
 
-      // smooth physics
       points.current.forEach((p) => {
-        p.x += (prev.x - p.x) * 0.18;
-        p.y += (prev.y - p.y) * 0.18;
+        p.x += (prev.x - p.x) * 0.20;
+        p.y += (prev.y - p.y) * 0.20;
         prev = p;
       });
 
-      // tail end position
       const tailEnd = points.current[points.current.length - 1];
 
-      // gradient depending on cursor color
       const gradient = ctx.createLinearGradient(
         tipX,
         tipY,
@@ -82,26 +99,21 @@ export default function DynamicCursor() {
         tailEnd.y
       );
 
-      if (cursorColor === "green") {
-        gradient.addColorStop(0, "#8BE5B2");
-        gradient.addColorStop(1, "rgba(139,229,178,0)");
-      } else {
-        gradient.addColorStop(0, "#FF9860");
-        gradient.addColorStop(1, "rgba(255,152,96,0)");
-      }
+      const { r, g, b } = currentColor.current;
+
+      gradient.addColorStop(0, `rgb(${r}, ${g}, ${b})`);
+      gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
 
       let prevX = tipX;
       let prevY = tipY;
 
       points.current.forEach((p, i) => {
         ctx.beginPath();
-
         ctx.moveTo(prevX, prevY);
         ctx.lineTo(p.x, p.y);
 
         ctx.lineWidth = 3 * (1 - i / TAIL_POINTS);
         ctx.strokeStyle = gradient;
-
         ctx.lineCap = "round";
         ctx.stroke();
 
@@ -115,7 +127,6 @@ export default function DynamicCursor() {
 
       requestAnimationFrame(animate);
     };
-
     animate();
 
     return () => {
@@ -123,7 +134,7 @@ export default function DynamicCursor() {
       window.removeEventListener("scroll", updateCursorColor);
       window.removeEventListener("resize", resize);
     };
-  }, [cursorColor]);
+  }, []);
 
   return (
     <>

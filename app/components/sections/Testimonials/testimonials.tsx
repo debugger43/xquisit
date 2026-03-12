@@ -94,10 +94,10 @@ export default function Testimonials() {
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top top",
+          start: "top 60%",
           end: "+=40%",
           scrub: 0.5,
-          pin: true,
+          // pin: true,
 
           onUpdate: (self) => {
 
