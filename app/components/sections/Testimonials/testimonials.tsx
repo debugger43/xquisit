@@ -23,7 +23,6 @@ export default function Testimonials() {
   const slide2ParagraphRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
-
     if (!sectionRef.current || !trackRef.current) return;
 
     const slide1Words = slide1HeadingRef.current?.querySelectorAll("span");
@@ -59,32 +58,39 @@ export default function Testimonials() {
       });
     }
     const ctx = gsap.context(() => {
-
       /* SPLIT TEXT */
       const slide1Split = new SplitType(slide1ParagraphRef.current!, {
+<<<<<<< Updated upstream
         types: "words,chars"
       });
 
       const slide2Split = new SplitType(slide2ParagraphRef.current!, {
         types: "words,chars"
+=======
+        types: "words,chars",
+      });
+
+      const slide2Split = new SplitType(slide2ParagraphRef.current!, {
+        types: "words,chars",
+>>>>>>> Stashed changes
       });
       /* INITIAL STATES */
 
       gsap.set([slide1Words, slide2Words], {
         opacity: 0,
         y: 20,
-        filter: "blur(8px)"
+        filter: "blur(8px)",
       });
 
       gsap.set([...slide1CardsRef.current, ...slide2CardsRef.current], {
         opacity: 0,
-        scale: 0.7
+        scale: 0.7,
       });
 
       gsap.set([...(slide1Split.chars || []), ...(slide2Split.chars || [])], {
         opacity: 0,
         y: 12,
-        filter: "blur(6px)"
+        filter: "blur(6px)",
       });
 
       /* HORIZONTAL SCROLL */
@@ -100,13 +106,11 @@ export default function Testimonials() {
           // pin: true,
 
           onUpdate: (self) => {
-
             const p = self.progress;
 
             /* SLIDE 1 */
 
             if (p > 0.01 && !slide1HeadingPlayed) {
-
               slide1HeadingPlayed = true;
 
               gsap.to(slide1Words, {
@@ -115,13 +119,11 @@ export default function Testimonials() {
                 filter: "blur(0px)",
                 duration: 0.9,
                 ease: "power3.out",
-                stagger: 0.12
+                stagger: 0.12,
               });
-
             }
 
             if (p > 0.02 && !slide1CardsPlayed) {
-
               slide1CardsPlayed = true;
 
               gsap.to(slide1CardsRef.current, {
@@ -129,28 +131,24 @@ export default function Testimonials() {
                 scale: 1,
                 duration: 1,
                 ease: "elastic.out(1,0.5)",
-                stagger: 0.12
+                stagger: 0.12,
               });
-
             }
 
             if (p > 0.015) {
-
               gsap.to(slide1Split.chars, {
                 opacity: 1,
                 y: 0,
                 filter: "blur(0px)",
                 duration: 0.45,
                 ease: "power2.out",
-                stagger: 0.01
+                stagger: 0.01,
               });
-
             }
 
             /* SLIDE 2 */
 
             if (p > 0.45 && !slide2HeadingPlayed) {
-
               slide2HeadingPlayed = true;
 
               gsap.to(slide2Words, {
@@ -159,13 +157,11 @@ export default function Testimonials() {
                 filter: "blur(0px)",
                 duration: 0.9,
                 ease: "power3.out",
-                stagger: 0.12
+                stagger: 0.12,
               });
-
             }
 
             if (p > 0.55 && !slide2CardsPlayed) {
-
               slide2CardsPlayed = true;
 
               gsap.to(slide2CardsRef.current, {
@@ -173,49 +169,46 @@ export default function Testimonials() {
                 scale: 1,
                 duration: 1,
                 ease: "elastic.out(1,0.5)",
-                stagger: 0.12
+                stagger: 0.12,
               });
-
             }
 
             if (p > 0.65) {
-
               gsap.to(slide2Split.chars, {
                 opacity: 1,
                 y: 0,
                 filter: "blur(0px)",
                 duration: 0.45,
                 ease: "power2.out",
-                stagger: 0.01
+                stagger: 0.01,
               });
-
             }
-
-          }
-        }
+          },
+        },
       });
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
       return () => {
         slide1Split.revert();
         slide2Split.revert();
       };
-
     }, sectionRef);
 
     return () => ctx.revert();
-
   }, []);
 
   return (
-
     <section
       ref={sectionRef}
       id="testimonials"
       data-cursor="orange"
       className="relative w-full h-screen overflow-hidden bg-brand"
     >
+<<<<<<< Updated upstream
       {/* GLOW CURVE BACKGROUND */}
 
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">        <svg
@@ -392,14 +385,132 @@ export default function Testimonials() {
 
               </div>
 
+=======
+      <div ref={trackRef} className="flex w-[200vw] h-full">
+        {/* SLIDE 1 */}
+
+        <div className="w-screen h-full flex justify-center">
+          <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
+            <div className="text-center">
+              <h2
+                ref={slide1HeadingRef}
+                className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
+              >
+                {"We Don’t Make The Claims, Our Clients Do"
+                  .split(" ")
+                  .map((word, i) => (
+                    <span
+                      key={i}
+                      className={`inline-block mr-[10px] ${
+                        ["Our", "Clients", "Do"].includes(word)
+                          ? "text-[#3d318d]"
+                          : ""
+                      }`}
+                    >
+                      {word}
+                    </span>
+                  ))}
+              </h2>
             </div>
 
+            <div className="flex justify-center gap-10">
+              <TestimonialCard
+                src="/elements/testimonials/test_1.png"
+                ref={(el) => {
+                  if (el) slide1CardsRef.current[0] = el;
+                }}
+              />
+
+              <TestimonialCard
+                src="/elements/testimonials/test_2.png"
+                ref={(el) => {
+                  if (el) slide1CardsRef.current[1] = el;
+                }}
+              />
+            </div>
+
+            <div className="max-w-[1100px]">
+              <p
+                ref={slide1ParagraphRef}
+                className="font-radlush text-[40px] leading-[120%] font-[500] text-black text-balance"
+              >
+                At Xquisit, we solve what frustrates creators the most: delays,
+                confusion, and edits that miss the mark. We
+                <br />
+                stay aligned, move fast, study your niche, and deliver
+                <br />
+                visuals that fit your brand perfectly. Smooth process,
+                <br /> solid results.
+              </p>
+>>>>>>> Stashed changes
+            </div>
           </div>
-
         </div>
+<<<<<<< Updated upstream
+=======
+
+        {/* SLIDE 2 */}
+
+        <div className="w-screen h-full flex justify-center">
+          <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
+            <div className="text-center">
+              <h2
+                ref={slide2HeadingRef}
+                className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
+              >
+                {"We Don’t Make The Claims, Our Clients Do"
+                  .split(" ")
+                  .map((word, i) => (
+                    <span
+                      key={i}
+                      className={`inline-block mr-[10px] ${
+                        ["Our", "Clients", "Do"].includes(word)
+                          ? "text-[#3d318d]"
+                          : ""
+                      }`}
+                    >
+                      {word}
+                    </span>
+                  ))}
+              </h2>
+            </div>
+
+            <div
+              ref={slide2ParagraphRef}
+              className="font-radlush text-[40px] leading-[115%] font-[500] text-black max-w-[1400px] mx-auto grid grid-cols-12 gap-y-1 text-balance"
+            >
+              <p className="col-start-2 col-span-12">
+                We listen before we edit. We study your tone, your audience,
+              </p>
+
+              <p className="lg:col-start-2 col-span-11">
+                and your pace to craft visuals that sync perfectly with your
+              </p>
+
+              <p className="lg:col-start-3 col-span-10">
+                brand’s heartbeat. We don’t follow rhythm. We create it.
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-10 mt-24">
+              <TestimonialCard
+                src="/elements/testimonials/test_3.png"
+                ref={(el) => {
+                  if (el) slide2CardsRef.current[0] = el;
+                }}
+              />
+
+              <TestimonialCard
+                src="/elements/testimonials/test_4.png"
+                ref={(el) => {
+                  if (el) slide2CardsRef.current[1] = el;
+                }}
+              />
+            </div>
+          </div>
+        </div>
+>>>>>>> Stashed changes
       </div>
-
     </section>
-
   );
 }
