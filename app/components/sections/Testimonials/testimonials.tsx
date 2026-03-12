@@ -9,7 +9,7 @@ import TestimonialCard from "./TestimonialsCard";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Testimonials() {
-
+  const curveRef = useRef<SVGPathElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
@@ -37,16 +37,37 @@ export default function Testimonials() {
     let slide1CardsPlayed = false;
     let slide2CardsPlayed = false;
 
+    /* CURVE DRAW ANIMATION */
+
+    if (curveRef.current) {
+      const length = curveRef.current.getTotalLength();
+
+      gsap.set(curveRef.current, {
+        strokeDasharray: length,
+        strokeDashoffset: length,
+      });
+
+      gsap.to(curveRef.current, {
+        strokeDashoffset: 0,
+        duration: 3,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+    }
     const ctx = gsap.context(() => {
 
       /* SPLIT TEXT */
-const slide1Split = new SplitType(slide1ParagraphRef.current!, {
-  types: "words,chars"
-});
+      const slide1Split = new SplitType(slide1ParagraphRef.current!, {
+        types: "words,chars"
+      });
 
-const slide2Split = new SplitType(slide2ParagraphRef.current!, {
-  types: "words,chars"
-});
+      const slide2Split = new SplitType(slide2ParagraphRef.current!, {
+        types: "words,chars"
+      });
       /* INITIAL STATES */
 
       gsap.set([slide1Words, slide2Words], {
@@ -174,7 +195,7 @@ const slide2Split = new SplitType(slide2ParagraphRef.current!, {
         }
       });
 
-     
+
 
       return () => {
         slide1Split.revert();
@@ -195,143 +216,187 @@ const slide2Split = new SplitType(slide2ParagraphRef.current!, {
       data-cursor="orange"
       className="relative w-full h-screen overflow-hidden bg-brand"
     >
+      {/* GLOW CURVE BACKGROUND */}
 
-      <div ref={trackRef} className="flex w-[200vw] h-full">
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">        <svg
+        width="1920"
+        height="1080"
+        viewBox="0 0 1920 1080"
+        fill="none"
+        className="w-[180vw] max-w-none"
+      >
+        <defs>
+          <filter
+            id="testimonial_curve_blur"
+            x="-120"
+            y="-66"
+            width="2162"
+            height="1147"
+            filterUnits="userSpaceOnUse"
+          >
+            <feGaussianBlur stdDeviation="6.5" />
+          </filter>
 
-        {/* SLIDE 1 */}
+          <linearGradient
+            id="testimonial_curve_gradient"
+            x1="967"
+            y1="-28"
+            x2="967"
+            y2="1042"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#DABD4A" />
+            <stop offset="1" stopColor="#3DA951" />
+          </linearGradient>
+        </defs>
 
-        <div className="w-screen h-full flex justify-center">
+        <g filter="url(#testimonial_curve_blur)">
+          <path
+            ref={curveRef}
+            d="M2021.5 -28.5C1914.5 3.16 1687.8 113.9 1637 303.5C1573.5 540.5 1478.5 685.5 1191.5 722.5C904.5 759.5 793.5 501.5 422 836C124.8 1103.6 -40.83 1054.5 -86.5 996.5"
+            stroke="url(#testimonial_curve_gradient)"
+            strokeWidth="55"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </g>
+      </svg>
+      </div>
+      <div className="relative z-10 h-full overflow-hidden">
+        <div ref={trackRef} className="flex w-[200vw] h-full">
+          {/* SLIDE 1 */}
 
-          <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
+          <div className="w-screen h-full flex justify-center">
 
-            <div className="text-center">
+            <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
 
-              <h2
-                ref={slide1HeadingRef}
-                className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
-              >
-             {"We Don’t Make The Claims, Our Clients Do"
-  .split(" ")
-  .map((word, i) => (
-    <span
-      key={i}
-      className={`inline-block mr-[10px] ${
-        ["Our", "Clients", "Do"].includes(word) ? "text-[#3d318d]" : ""
-      }`}
-    >
-      {word}
-    </span>
-  ))}
-              </h2>
+              <div className="text-center">
+
+                <h2
+                  ref={slide1HeadingRef}
+                  className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
+                >
+                  {"We Don’t Make The Claims, Our Clients Do"
+                    .split(" ")
+                    .map((word, i) => (
+                      <span
+                        key={i}
+                        className={`inline-block mr-[10px] ${["Our", "Clients", "Do"].includes(word) ? "text-[#3d318d]" : ""
+                          }`}
+                      >
+                        {word}
+                      </span>
+                    ))}
+                </h2>
+
+              </div>
+
+              <div className="flex justify-center gap-10">
+
+                <TestimonialCard
+                  src="/elements/testimonials/test_1.png"
+                  ref={(el) => {
+                    if (el) slide1CardsRef.current[0] = el;
+                  }}
+                />
+
+                <TestimonialCard
+                  src="/elements/testimonials/test_2.png"
+                  ref={(el) => {
+                    if (el) slide1CardsRef.current[1] = el;
+                  }}
+                />
+
+              </div>
+
+              <div className="max-w-[1100px]">
+
+                <p
+                  ref={slide1ParagraphRef}
+                  className="font-radlush text-[40px] leading-[120%] font-[500] text-black text-balance"
+                >
+                  At Xquisit, we solve what frustrates creators the most:
+                  delays, confusion, and edits that miss the mark. We<br />stay aligned, move
+                  fast, study your niche, and deliver<br />visuals that fit your brand
+                  perfectly. Smooth process,<br /> solid results.
+                </p>
+
+              </div>
 
             </div>
 
-            <div className="flex justify-center gap-10">
+          </div>
 
-              <TestimonialCard
-                src="/elements/testimonials/test_1.png"
-                ref={(el) => {
-                  if (el) slide1CardsRef.current[0] = el;
-                }}
-              />
+          {/* SLIDE 2 */}
 
-              <TestimonialCard
-                src="/elements/testimonials/test_2.png"
-                ref={(el) => {
-                  if (el) slide1CardsRef.current[1] = el;
-                }}
-              />
+          <div className="w-screen h-full flex justify-center">
 
-            </div>
+            <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
 
-            <div className="max-w-[1100px]">
+              <div className="text-center">
 
-              <p
-                ref={slide1ParagraphRef}
-               className="font-radlush text-[40px] leading-[120%] font-[500] text-black text-balance"
+                <h2
+                  ref={slide2HeadingRef}
+                  className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
+                >
+                  {"We Don’t Make The Claims, Our Clients Do"
+                    .split(" ")
+                    .map((word, i) => (
+                      <span
+                        key={i}
+                        className={`inline-block mr-[10px] ${["Our", "Clients", "Do"].includes(word) ? "text-[#3d318d]" : ""
+                          }`}
+                      >
+                        {word}
+                      </span>
+                    ))}
+                </h2>
+
+              </div>
+
+
+              <div
+                ref={slide2ParagraphRef}
+                className="font-radlush text-[40px] leading-[115%] font-[500] text-black max-w-[1400px] mx-auto grid grid-cols-12 gap-y-1 text-balance"
               >
-                At Xquisit, we solve what frustrates creators the most: 
-                delays, confusion, and edits that miss the mark. We<br />stay aligned, move
-                fast, study your niche, and deliver<br />visuals that fit your brand
-                perfectly. Smooth process,<br /> solid results.
-              </p>
+
+                <p className="col-start-2 col-span-12">
+                  We listen before we edit. We study your tone, your audience,
+                </p>
+
+                <p className="lg:col-start-2 col-span-11">
+                  and your pace to craft visuals that sync perfectly with your
+                </p>
+
+                <p className="lg:col-start-3 col-span-10">
+                  brand’s heartbeat. We don’t follow rhythm. We create it.
+                </p>
+
+              </div>
+
+              <div className="flex justify-center gap-10 mt-24">
+
+                <TestimonialCard
+                  src="/elements/testimonials/test_3.png"
+                  ref={(el) => {
+                    if (el) slide2CardsRef.current[0] = el;
+                  }}
+                />
+
+                <TestimonialCard
+                  src="/elements/testimonials/test_4.png"
+                  ref={(el) => {
+                    if (el) slide2CardsRef.current[1] = el;
+                  }}
+                />
+
+              </div>
 
             </div>
 
           </div>
 
         </div>
-
-        {/* SLIDE 2 */}
-
-        <div className="w-screen h-full flex justify-center">
-
-          <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
-
-            <div className="text-center">
-
-              <h2
-                ref={slide2HeadingRef}
-                className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
-              >
-                {"We Don’t Make The Claims, Our Clients Do"
-  .split(" ")
-  .map((word, i) => (
-    <span
-      key={i}
-      className={`inline-block mr-[10px] ${
-        ["Our", "Clients", "Do"].includes(word) ? "text-[#3d318d]" : ""
-      }`}
-    >
-      {word}
-    </span>
-  ))}
-              </h2>
-
-            </div>
-
-
-            <div
-              ref={slide2ParagraphRef}
-              className="font-radlush text-[40px] leading-[115%] font-[500] text-black max-w-[1400px] mx-auto grid grid-cols-12 gap-y-1 text-balance"
-            >
-
-              <p className="col-start-2 col-span-12">
-                We listen before we edit. We study your tone, your audience,
-              </p>
-
-              <p className="lg:col-start-2 col-span-11">
-                and your pace to craft visuals that sync perfectly with your
-              </p>
-
-              <p className="lg:col-start-3 col-span-10">
-                brand’s heartbeat. We don’t follow rhythm. We create it.
-              </p>
-
-            </div>
-
-            <div className="flex justify-center gap-10 mt-24">
-
-              <TestimonialCard
-                src="/elements/testimonials/test_3.png"
-                ref={(el) => {
-                  if (el) slide2CardsRef.current[0] = el;
-                }}
-              />
-
-              <TestimonialCard
-                src="/elements/testimonials/test_4.png"
-                ref={(el) => {
-                  if (el) slide2CardsRef.current[1] = el;
-                }}
-              />
-
-            </div>
-
-          </div>
-
-        </div>
-
       </div>
 
     </section>
