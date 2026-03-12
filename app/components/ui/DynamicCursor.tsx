@@ -2,23 +2,33 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const TRAIL_COUNT = 10;
+const TAIL_POINTS = 18;
 
 export default function DynamicCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const trailRefs = useRef<HTMLDivElement[]>([]);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const mouse = useRef({ x: 0, y: 0 });
-  const lastMouse = useRef({ x: 0, y: 0 });
 
-  const trail = useRef(
-    Array.from({ length: TRAIL_COUNT }, () => ({ x: 0, y: 0 }))
+  const points = useRef(
+    Array.from({ length: TAIL_POINTS }, () => ({ x: 0, y: 0 }))
   );
 
   const [cursorColor, setCursorColor] = useState("orange");
   const colorRef = useRef("orange");
 
   useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext("2d")!;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+
     const updateCursorColor = () => {
       const element = document.elementFromPoint(
         mouse.current.x,
@@ -40,7 +50,6 @@ export default function DynamicCursor() {
     const moveCursor = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-
       updateCursorColor();
     };
 
@@ -48,57 +57,61 @@ export default function DynamicCursor() {
     window.addEventListener("scroll", updateCursorColor);
 
     const animate = () => {
-      const dx = mouse.current.x - lastMouse.current.x;
-      const dy = mouse.current.y - lastMouse.current.y;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const velocity = Math.sqrt(dx * dx + dy * dy);
+      const tipX = mouse.current.x;
+      const tipY = mouse.current.y + 5;
 
-      lastMouse.current.x = mouse.current.x;
-      lastMouse.current.y = mouse.current.y;
+      let prev = { x: tipX, y: tipY };
 
-      /* POINTER LIQUID SCALE */
+      // smooth physics
+      points.current.forEach((p) => {
+        p.x += (prev.x - p.x) * 0.18;
+        p.y += (prev.y - p.y) * 0.18;
+        prev = p;
+      });
 
-      if (cursorRef.current) {
-        const stretch = Math.min(velocity * 0.02, 0.35);
+      // tail end position
+      const tailEnd = points.current[points.current.length - 1];
 
-        const scaleX = 1 + stretch;
-        const scaleY = 1 - stretch;
+      // gradient depending on cursor color
+      const gradient = ctx.createLinearGradient(
+        tipX,
+        tipY,
+        tailEnd.x,
+        tailEnd.y
+      );
 
-        cursorRef.current.style.transform = `
-          translate(${mouse.current.x - 12}px, ${mouse.current.y - 8}px)
-          scale(${scaleX}, ${scaleY})
-        `;
+      if (cursorColor === "green") {
+        gradient.addColorStop(0, "#8BE5B2");
+        gradient.addColorStop(1, "rgba(139,229,178,0)");
+      } else {
+        gradient.addColorStop(0, "#FF9860");
+        gradient.addColorStop(1, "rgba(255,152,96,0)");
       }
 
-      /* TRAIL */
-let prev = { x: mouse.current.x, y: mouse.current.y };
+      let prevX = tipX;
+      let prevY = tipY;
 
-trailRefs.current.forEach((dot, index) => {
+      points.current.forEach((p, i) => {
+        ctx.beginPath();
 
-  const pos = trail.current[index];
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(p.x, p.y);
 
-  pos.x += (prev.x - pos.x) * 0.25;
-  pos.y += (prev.y - pos.y) * 0.25;
+        ctx.lineWidth = 3 * (1 - i / TAIL_POINTS);
+        ctx.strokeStyle = gradient;
 
-  const scale = (TRAIL_COUNT - index) / TRAIL_COUNT;
+        ctx.lineCap = "round";
+        ctx.stroke();
 
-  const stretch = Math.min(velocity * 0.02, 0.6);
+        prevX = p.x;
+        prevY = p.y;
+      });
 
-  const scaleX = scale + stretch;
-  const scaleY = scale - stretch;
-
-  if (dot) {
-
-    dot.style.transform =
-      `translate(${pos.x - 16}px, ${pos.y - 15}px)
-       scale(${scaleX}, ${scaleY})`;
-
-    dot.style.opacity = `${scale}`;
-  }
-
-  prev = pos;
-
-});
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate(${mouse.current.x - 12}px, ${mouse.current.y - 8}px)`;
+      }
 
       requestAnimationFrame(animate);
     };
@@ -108,26 +121,17 @@ trailRefs.current.forEach((dot, index) => {
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("scroll", updateCursorColor);
+      window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [cursorColor]);
 
   return (
     <>
-      {/* TRAIL DOTS */}
-      {Array.from({ length: TRAIL_COUNT }).map((_, i) => (
-        <div
-          key={i}
-          ref={(el) => {
-            if (el) trailRefs.current[i] = el;
-          }}
-          className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full blur-[1px]
-          ${cursorColor === "green" ? "bg-[#8BE5B2]" : "bg-[#FF9860]"}`}
-          style={{
-            width: "10px",
-            height: "10px",
-          }}
-        />
-      ))}
+      {/* LINE TAIL */}
+      <canvas
+        ref={canvasRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] blur-[1px]"
+      />
 
       {/* POINTER */}
       <div
@@ -136,7 +140,7 @@ trailRefs.current.forEach((dot, index) => {
       >
         <img
           src={`/cursor/${cursorColor}.svg`}
-          className="w-[36px] h-[36px]"
+          className="w-[22px] h-[22px]"
         />
       </div>
     </>
