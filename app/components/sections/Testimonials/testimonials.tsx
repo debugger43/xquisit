@@ -31,36 +31,26 @@ export default function Testimonials() {
 
     if (!slide1Words || !slide2Words) return;
 
-    let slide1HeadingPlayed = false;
     let slide2HeadingPlayed = false;
-
-    let slide1CardsPlayed = false;
     let slide2CardsPlayed = false;
 
-    /* CURVE DRAW ANIMATION */
+    /* CURVE INITIAL STATE */
+
+    let curveLength = 0;
 
     if (curveRef.current) {
-      const length = curveRef.current.getTotalLength();
+      curveLength = curveRef.current.getTotalLength();
 
       gsap.set(curveRef.current, {
-        strokeDasharray: length,
-        strokeDashoffset: length,
-      });
-
-      gsap.to(curveRef.current, {
-        strokeDashoffset: 0,
-        duration: 3,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true,
-        },
+        strokeDasharray: curveLength,
+        strokeDashoffset: curveLength
       });
     }
+
     const ctx = gsap.context(() => {
 
       /* SPLIT TEXT */
+
       const slide1Split = new SplitType(slide1ParagraphRef.current!, {
         types: "words,chars"
       });
@@ -68,6 +58,7 @@ export default function Testimonials() {
       const slide2Split = new SplitType(slide2ParagraphRef.current!, {
         types: "words,chars"
       });
+
       /* INITIAL STATES */
 
       gsap.set([slide1Words, slide2Words], {
@@ -87,6 +78,49 @@ export default function Testimonials() {
         filter: "blur(6px)"
       });
 
+      /* SLIDE 1 ANIMATIONS */
+
+      gsap.to(slide1Words, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 0.9,
+        ease: "power3.out",
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 65%",
+          once: true
+        }
+      });
+
+      gsap.to(slide1CardsRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "elastic.out(1,0.5)",
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 65%",
+          once: true
+        }
+      });
+
+      gsap.to(slide1Split.chars, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 0.45,
+        ease: "power2.out",
+        stagger: 0.01,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 65%",
+          once: true
+        }
+      });
+
       /* HORIZONTAL SCROLL */
 
       gsap.to(trackRef.current, {
@@ -94,57 +128,21 @@ export default function Testimonials() {
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 60%",
+          start: "top top",
           end: "+=40%",
           scrub: 0.5,
-          // pin: true,
+          pin: true,
 
           onUpdate: (self) => {
 
             const p = self.progress;
 
-            /* SLIDE 1 */
+            /* CURVE PROGRESS WITH SCROLL */
 
-            if (p > 0.01 && !slide1HeadingPlayed) {
-
-              slide1HeadingPlayed = true;
-
-              gsap.to(slide1Words, {
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
-                duration: 0.9,
-                ease: "power3.out",
-                stagger: 0.12
+            if (curveRef.current) {
+              gsap.set(curveRef.current, {
+                strokeDashoffset: curveLength * (1 - p)
               });
-
-            }
-
-            if (p > 0.02 && !slide1CardsPlayed) {
-
-              slide1CardsPlayed = true;
-
-              gsap.to(slide1CardsRef.current, {
-                opacity: 1,
-                scale: 1,
-                duration: 1,
-                ease: "elastic.out(1,0.5)",
-                stagger: 0.12
-              });
-
-            }
-
-            if (p > 0.015) {
-
-              gsap.to(slide1Split.chars, {
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
-                duration: 0.45,
-                ease: "power2.out",
-                stagger: 0.01
-              });
-
             }
 
             /* SLIDE 2 */
@@ -195,8 +193,6 @@ export default function Testimonials() {
         }
       });
 
-
-
       return () => {
         slide1Split.revert();
         slide2Split.revert();
@@ -209,7 +205,6 @@ export default function Testimonials() {
   }, []);
 
   return (
-
     <section
       ref={sectionRef}
       id="testimonials"
@@ -218,49 +213,52 @@ export default function Testimonials() {
     >
       {/* GLOW CURVE BACKGROUND */}
 
-      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">        <svg
-        width="1920"
-        height="1080"
-        viewBox="0 0 1920 1080"
-        fill="none"
-        className="w-[180vw] max-w-none"
-      >
-        <defs>
-          <filter
-            id="testimonial_curve_blur"
-            x="-120"
-            y="-66"
-            width="2162"
-            height="1147"
-            filterUnits="userSpaceOnUse"
-          >
-            <feGaussianBlur stdDeviation="6.5" />
-          </filter>
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+        <svg
+          width="1920"
+          height="1080"
+          viewBox="0 0 1920 1080"
+          fill="none"
+          className="w-[180vw] max-w-none"
+        >
+          <defs>
+            <filter
+              id="testimonial_curve_blur"
+              x="-120"
+              y="-66"
+              width="2162"
+              height="1147"
+              filterUnits="userSpaceOnUse"
+            >
+              <feGaussianBlur stdDeviation="6.5" />
+            </filter>
 
-          <linearGradient
-            id="testimonial_curve_gradient"
-            x1="967"
-            y1="-28"
-            x2="967"
-            y2="1042"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#DABD4A" />
-            <stop offset="1" stopColor="#3DA951" />
-          </linearGradient>
-        </defs>
+            <linearGradient
+              id="testimonial_curve_gradient"
+              x1="967"
+              y1="-28"
+              x2="967"
+              y2="1042"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0%" stopColor="#33E069" />
+              <stop offset="50%" stopColor="#33E069" />
+              <stop offset="80%" stopColor="#1C727A" />
+              <stop offset="100%" stopColor="#1C727A" />
+            </linearGradient>
+          </defs>
 
-        <g filter="url(#testimonial_curve_blur)">
-          <path
-            ref={curveRef}
-            d="M2021.5 -28.5C1914.5 3.16 1687.8 113.9 1637 303.5C1573.5 540.5 1478.5 685.5 1191.5 722.5C904.5 759.5 793.5 501.5 422 836C124.8 1103.6 -40.83 1054.5 -86.5 996.5"
-            stroke="url(#testimonial_curve_gradient)"
-            strokeWidth="55"
-            strokeLinecap="round"
-            fill="none"
-          />
-        </g>
-      </svg>
+          <g filter="url(#testimonial_curve_blur)">
+            <path
+              ref={curveRef}
+              d="M2021.5 -28.5C1914.5 3.16 1687.8 113.9 1637 303.5C1573.5 540.5 1478.5 685.5 1191.5 722.5C904.5 759.5 793.5 501.5 422 836C124.8 1103.6 -40.83 1054.5 -86.5 996.5"
+              stroke="url(#testimonial_curve_gradient)"
+              strokeWidth="55"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </g>
+        </svg>
       </div>
       <div className="relative z-10 h-full overflow-hidden">
         <div ref={trackRef} className="flex w-[200vw] h-full">
