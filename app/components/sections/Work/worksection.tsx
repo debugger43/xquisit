@@ -156,9 +156,9 @@ gsap.to(cards, {
 
       {/* HEADING */}
       <div className="absolute top-[6vh] left-1/2 -translate-x-1/2 w-[92vw] max-w-[1500px] text-center pointer-events-none z-10">
-        <h2
+        <h2 
           ref={headingRef}
-          className="font-[900] text-[clamp(16px,7vw,72px)] leading-[1.1] text-white whitespace-nowrap"
+          className="font-[900] text-[clamp(16px,5vw,72px)] leading-[1.1] text-white whitespace-nowrap"
         >
           {"Different Styles, Same Excellence".split(" ").map((word, i) => (
             <span
