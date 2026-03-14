@@ -219,7 +219,7 @@ export default function Testimonials() {
           height="1080"
           viewBox="0 0 1920 1080"
           fill="none"
-          className="w-[180vw] max-w-none"
+          className="w-[180vw] max-w-none scale-x-[-1] scale-y-[-1]"
         >
           <defs>
             <filter
@@ -241,10 +241,10 @@ export default function Testimonials() {
               y2="1042"
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0%" stopColor="#33E069" />
-              <stop offset="50%" stopColor="#33E069" />
-              <stop offset="80%" stopColor="#1C727A" />
-              <stop offset="100%" stopColor="#1C727A" />
+              <stop offset="0%" stopColor="#1C727A" />
+              <stop offset="50%" stopColor="#1C727A" />
+              <stop offset="80%" stopColor="#33E069" />
+              <stop offset="100%" stopColor="#33E069" />
             </linearGradient>
           </defs>
 
