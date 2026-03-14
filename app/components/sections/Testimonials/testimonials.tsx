@@ -60,19 +60,11 @@ export default function Testimonials() {
     const ctx = gsap.context(() => {
       /* SPLIT TEXT */
       const slide1Split = new SplitType(slide1ParagraphRef.current!, {
-<<<<<<< Updated upstream
         types: "words,chars"
       });
 
       const slide2Split = new SplitType(slide2ParagraphRef.current!, {
         types: "words,chars"
-=======
-        types: "words,chars",
-      });
-
-      const slide2Split = new SplitType(slide2ParagraphRef.current!, {
-        types: "words,chars",
->>>>>>> Stashed changes
       });
       /* INITIAL STATES */
 
@@ -187,11 +179,8 @@ export default function Testimonials() {
         },
       });
 
-<<<<<<< Updated upstream
 
 
-=======
->>>>>>> Stashed changes
       return () => {
         slide1Split.revert();
         slide2Split.revert();
@@ -208,7 +197,6 @@ export default function Testimonials() {
       data-cursor="orange"
       className="relative w-full h-screen overflow-hidden bg-brand"
     >
-<<<<<<< Updated upstream
       {/* GLOW CURVE BACKGROUND */}
 
       <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">        <svg
@@ -385,131 +373,9 @@ export default function Testimonials() {
 
               </div>
 
-=======
-      <div ref={trackRef} className="flex w-[200vw] h-full">
-        {/* SLIDE 1 */}
-
-        <div className="w-screen h-full flex justify-center">
-          <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
-            <div className="text-center">
-              <h2
-                ref={slide1HeadingRef}
-                className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
-              >
-                {"We Don’t Make The Claims, Our Clients Do"
-                  .split(" ")
-                  .map((word, i) => (
-                    <span
-                      key={i}
-                      className={`inline-block mr-[10px] ${
-                        ["Our", "Clients", "Do"].includes(word)
-                          ? "text-[#3d318d]"
-                          : ""
-                      }`}
-                    >
-                      {word}
-                    </span>
-                  ))}
-              </h2>
-            </div>
-
-            <div className="flex justify-center gap-10">
-              <TestimonialCard
-                src="/elements/testimonials/test_1.png"
-                ref={(el) => {
-                  if (el) slide1CardsRef.current[0] = el;
-                }}
-              />
-
-              <TestimonialCard
-                src="/elements/testimonials/test_2.png"
-                ref={(el) => {
-                  if (el) slide1CardsRef.current[1] = el;
-                }}
-              />
-            </div>
-
-            <div className="max-w-[1100px]">
-              <p
-                ref={slide1ParagraphRef}
-                className="font-radlush text-[40px] leading-[120%] font-[500] text-black text-balance"
-              >
-                At Xquisit, we solve what frustrates creators the most: delays,
-                confusion, and edits that miss the mark. We
-                <br />
-                stay aligned, move fast, study your niche, and deliver
-                <br />
-                visuals that fit your brand perfectly. Smooth process,
-                <br /> solid results.
-              </p>
->>>>>>> Stashed changes
             </div>
           </div>
         </div>
-<<<<<<< Updated upstream
-=======
-
-        {/* SLIDE 2 */}
-
-        <div className="w-screen h-full flex justify-center">
-          <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
-            <div className="text-center">
-              <h2
-                ref={slide2HeadingRef}
-                className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
-              >
-                {"We Don’t Make The Claims, Our Clients Do"
-                  .split(" ")
-                  .map((word, i) => (
-                    <span
-                      key={i}
-                      className={`inline-block mr-[10px] ${
-                        ["Our", "Clients", "Do"].includes(word)
-                          ? "text-[#3d318d]"
-                          : ""
-                      }`}
-                    >
-                      {word}
-                    </span>
-                  ))}
-              </h2>
-            </div>
-
-            <div
-              ref={slide2ParagraphRef}
-              className="font-radlush text-[40px] leading-[115%] font-[500] text-black max-w-[1400px] mx-auto grid grid-cols-12 gap-y-1 text-balance"
-            >
-              <p className="col-start-2 col-span-12">
-                We listen before we edit. We study your tone, your audience,
-              </p>
-
-              <p className="lg:col-start-2 col-span-11">
-                and your pace to craft visuals that sync perfectly with your
-              </p>
-
-              <p className="lg:col-start-3 col-span-10">
-                brand’s heartbeat. We don’t follow rhythm. We create it.
-              </p>
-            </div>
-
-            <div className="flex justify-center gap-10 mt-24">
-              <TestimonialCard
-                src="/elements/testimonials/test_3.png"
-                ref={(el) => {
-                  if (el) slide2CardsRef.current[0] = el;
-                }}
-              />
-
-              <TestimonialCard
-                src="/elements/testimonials/test_4.png"
-                ref={(el) => {
-                  if (el) slide2CardsRef.current[1] = el;
-                }}
-              />
-            </div>
-          </div>
-        </div>
->>>>>>> Stashed changes
       </div>
     </section>
   );
