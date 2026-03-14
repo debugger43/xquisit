@@ -91,6 +91,7 @@ gsap.to(cards, {
 
   return (
     <section 
+    id="works"
     data-cursor="green"
     className="relative h-[var(--app-height)] w-full overflow-hidden bg-black">
 
