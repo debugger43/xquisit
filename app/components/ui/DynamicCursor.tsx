@@ -7,7 +7,7 @@ const TAIL_POINTS = 18;
 export default function DynamicCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const [isPointer, setIsPointer] = useState(false);
   const mouse = useRef({ x: 0, y: 0 });
 
   const points = useRef(
@@ -36,6 +36,14 @@ export default function DynamicCursor() {
         mouse.current.x,
         mouse.current.y
       );
+      if (!element) return;
+
+      // detect clickable elements
+      const clickable = element.closest(
+        "button, a, input, textarea, select, [role='button'], [data-clickable]"
+      );
+
+      setIsPointer(!!clickable);
 
       const section = element?.closest("[data-cursor]");
 
@@ -150,7 +158,7 @@ export default function DynamicCursor() {
         className="fixed top-0 left-0 pointer-events-none z-[9999]"
       >
         <img
-          src={`/cursor/${cursorColor}.svg`}
+          src={`/cursor/${isPointer ? `hand-${cursorColor}` : cursorColor}.svg`}
           className="w-[22px] h-[22px]"
         />
       </div>

@@ -286,7 +286,6 @@ export default function Testimonials() {
                       </span>
                     ))}
                 </h2>
-
               </div>
 
               <div className="flex justify-center gap-10">
