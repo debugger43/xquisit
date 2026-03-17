@@ -3,13 +3,14 @@
 import { useRef } from "react";
 
 type WorkCardProps = {
-  src: string;        // image preview
-  video?: string;     // hover video
-  accentSvg?: string; // svg accent background
+  src: string;
+  video?: string;
+  accentSvg?: string;
   offsetX?: number;
   offsetY?: number;
   className?: string;
   imageClassName?: string;
+  onClick?: (video: string) => void;
 };
 
 export default function WorkCard({
@@ -20,6 +21,7 @@ export default function WorkCard({
   offsetY = 11,
   className = "",
   imageClassName = "",
+  onClick
 }: WorkCardProps) {
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -36,7 +38,11 @@ export default function WorkCard({
       videoRef.current.pause();
     }
   };
-
+  const handleClick = () => {
+    if (video && onClick) {
+      onClick(video);
+    }
+  };
   return (
     <div className="relative w-full break-inside-avoid">
 
@@ -57,6 +63,7 @@ export default function WorkCard({
         className="relative z-10 overflow-hidden rounded-2xl border-3 border-white bg-black transition-transform duration-300 hover:scale-[1.10]"
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
+        onClick={handleClick}
       >
 
         {/* IMAGE PREVIEW */}
@@ -64,7 +71,7 @@ export default function WorkCard({
           src={src}
           alt=""
           className={`block w-full h-auto object-cover ${imageClassName}`}
-       
+
         />
 
         {/* HOVER VIDEO */}
