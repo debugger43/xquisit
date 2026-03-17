@@ -8,23 +8,26 @@ export default function WorkGrid() {
         <WorkCard
           src="/elements/works/work-01.webp"
           video="/elements/works/videos/R1C1.mp4"
-          accentColor="#6CCCCE"
+          accentSvg="/elements/works/R1C1-V.svg"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
           src="/elements/works/work-08.webp"
-          video="/elements/works/videos/R1C8.mp4"
-          accentColor="#6CCCCE"
+          accentSvg="/elements/works/R2C1-V.svg"
+            offsetX={60}
+  offsetY={-80}
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
           src="/elements/works/work-02.webp"
-          video="/elements/works/videos/R1C2.mp4"
-          accentColor="rgb(236,231,126)"
+          video="/elements/works/videos/R1C2 copy.mp4"
+          accentSvg="/elements/works/R1C2-V.svg"
+          
+          imageClassName="hover:max-h-[200px]"
         />
       </div>
 
@@ -32,7 +35,9 @@ export default function WorkGrid() {
         <WorkCard
           src="/elements/works/work-05.webp"
           video="/elements/works/videos/R2C2.mp4"
-          accentColor="#6CCCCE"
+          accentSvg="/elements/works/R2C2-V.svg"
+            offsetX={59}
+  offsetY={10}
         />
       </div>
 
@@ -40,15 +45,19 @@ export default function WorkGrid() {
         <WorkCard
           src="/elements/works/work-03.webp"
           video="/elements/works/videos/R1C3.mp4"
-          accentColor="rgb(227,73,72)"
+          accentSvg="/elements/works/R1C3-V.svg"
+            offsetX={9}
+            offsetY={8}
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
           src="/elements/works/work-06.webp"
-          video="/elements/works/videos/R1C6.mp4"
-          accentColor="rgb(206,107,178)"
+          video="/elements/works/videos/R2C3.mp4"
+          accentSvg="/elements/works/R2C3-V.svg"
+            offsetX={8}
+  offsetY={2}
         />
       </div>
 
@@ -56,15 +65,17 @@ export default function WorkGrid() {
         <WorkCard
           src="/elements/works/work-04.webp"
           video="/elements/works/videos/R1C4.mp4"
-          accentColor="rgb(107,206,115)"
+          accentSvg="/elements/works/R1C4-V.svg"
         />
       </div>
 
       <div className="mb-10 work-item">
         <WorkCard
           src="/elements/works/work-07.webp"
-          video="/elements/works/videos/R1C7.mp4"
-          accentColor="rgb(123,107,206)"
+          video="/elements/works/videos/R2C4.mp4"
+          accentSvg="/elements/works/R2C4-V.svg"
+            offsetX={17}
+            offsetY={8}
         />
       </div>
 

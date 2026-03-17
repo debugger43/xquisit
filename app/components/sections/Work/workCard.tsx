@@ -3,19 +3,23 @@
 import { useRef } from "react";
 
 type WorkCardProps = {
-  src: string;        // image
-  video?: string;    
-  accentColor?: string;
+  src: string;        // image preview
+  video?: string;     // hover video
+  accentSvg?: string; // svg accent background
   offsetX?: number;
   offsetY?: number;
+  className?: string;
+  imageClassName?: string;
 };
 
 export default function WorkCard({
   src,
   video,
-  accentColor = "#6CCCCE",
-  offsetX = 8,
-  offsetY = 8,
+  accentSvg,
+  offsetX = 11,
+  offsetY = 11,
+  className = "",
+  imageClassName = "",
 }: WorkCardProps) {
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -36,39 +40,42 @@ export default function WorkCard({
   return (
     <div className="relative w-full break-inside-avoid">
 
-      {/* BACK ACCENT CARD */}
-      <div
-        className="absolute inset-0 rounded-2xl"
-        style={{
-          transform: `translate(${offsetX}px, ${offsetY}px)`,
-          backgroundColor: accentColor,
-        }}
-      >
-        <div className="absolute inset-0 rounded-2xl border-2 border-white pointer-events-none" />
-      </div>
+      {/* SVG ACCENT BACKGROUND */}
+      {accentSvg && (
+        <img
+          src={accentSvg}
+          alt=""
+          className="absolute inset-0 w-full h-full pointer-events-none z-0"
+          style={{
+            transform: `translate(${offsetX}px, ${offsetY}px) scale(1.02)`,
+          }}
+        />
+      )}
 
       {/* FRONT CARD */}
       <div
-        className="relative overflow-hidden rounded-2xl border-2 border-white bg-black transition-transform duration-300 hover:scale-[1.07]"
+        className="relative z-10 overflow-hidden rounded-2xl border-3 border-white bg-black transition-transform duration-300 hover:scale-[1.10]"
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
 
-        {/* IMAGE */}
+        {/* IMAGE PREVIEW */}
         <img
           src={src}
           alt=""
-          className="block w-full h-auto object-cover"
+          className={`block w-full h-auto object-cover ${imageClassName}`}
+       
         />
 
-        {/* VIDEO */}
+        {/* HOVER VIDEO */}
         {video && (
           <video
             ref={videoRef}
             muted
             playsInline
             preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-0 hover:opacity-100 transition-opacity duration-300"
+            loop
+            className={`absolute inset-0 w-full h-full object-cover opacity-0 hover:opacity-100 transition-opacity duration-300 ${className}`}
           >
             <source src={video} type="video/mp4" />
           </video>
