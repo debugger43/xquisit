@@ -4,7 +4,7 @@ import WorkGrid from "./workGrid";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import PortfolioButton from "./PortfolioButton";
+import PortfolioButton from "./PortfolioButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,35 +67,35 @@ export default function WorkSection() {
     /* -------------------------------
        WORK CARDS ANIMATION
     -------------------------------- */
- if (gridRef.current) {
-  const cards = gridRef.current.querySelectorAll(".work-item");
-gsap.set(cards, {
-  opacity: 0,
-  scale: 0.6,
-});
+    if (gridRef.current) {
+      const cards = gridRef.current.querySelectorAll(".work-item");
+      gsap.set(cards, {
+        opacity: 0,
+        scale: 0.6,
+      });
 
-gsap.to(cards, {
-  opacity: 1,
-  scale: 1,
-  duration: 1.2,
-  ease: "elastic.out(1.2, 0.45)",
-  stagger: 0.14,
-  delay: 1,
-  scrollTrigger: {
-    trigger: gridRef.current,
-    start: "top 90%",
-    once: true,
-  },
-});
-}
+      gsap.to(cards, {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: "elastic.out(1.2, 0.45)",
+        stagger: 0.14,
+        delay: 1,
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 90%",
+          once: true,
+        },
+      });
+    }
   }, []);
 
   return (
-    <section 
-    id="works"
-    data-cursor="green"
-    className="relative h-[var(--app-height)] w-full overflow-hidden bg-black">
-
+    <section
+      id="works"
+      data-cursor="green"
+      className="relative h-[var(--app-height)] w-full overflow-hidden bg-black"
+    >
       {/* GRID BACKGROUND */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
@@ -125,8 +125,16 @@ gsap.to(cards, {
               colorInterpolationFilters="sRGB"
             >
               <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-              <feGaussianBlur stdDeviation="6.55" result="effect1_foregroundBlur_320_34" />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="BackgroundImageFix"
+                result="shape"
+              />
+              <feGaussianBlur
+                stdDeviation="6.55"
+                result="effect1_foregroundBlur_320_34"
+              />
             </filter>
 
             <linearGradient
@@ -157,7 +165,7 @@ gsap.to(cards, {
 
       {/* HEADING */}
       <div className="absolute top-[6vh] left-1/2 -translate-x-1/2 w-[92vw] max-w-[1500px] text-center pointer-events-none z-10">
-        <h2 
+        <h2
           ref={headingRef}
           className="font-[900] text-[clamp(16px,5vw,72px)] leading-[1.1] text-white whitespace-nowrap"
         >
@@ -180,13 +188,14 @@ gsap.to(cards, {
         className="mx-auto mt-[12vh] w-[min(86vw,1520px)] h-[90vh] overflow-hidden relative z-10"
       >
         <WorkGrid />
+
+        {/* PORTFOLIO BUTTON */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="pointer-events-auto mt-[30%]">
+            <PortfolioButton />
+          </div>
+        </div>
       </div>
-
-      {/* FLOATING PORTFOLIO BUTTON
-<div className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 z-20">
-  <PortfolioButton />
-</div> */}
-
     </section>
   );
 }

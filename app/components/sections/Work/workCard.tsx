@@ -3,9 +3,9 @@
 import { useRef } from "react";
 
 type WorkCardProps = {
-  src: string;        // image preview
-  video?: string;     // hover video
-  accentSvg?: string; // svg accent background
+  src: string;
+  video?: string;
+  accentSvg?: string;
   offsetX?: number;
   offsetY?: number;
   className?: string;
@@ -21,7 +21,6 @@ export default function WorkCard({
   className = "",
   imageClassName = "",
 }: WorkCardProps) {
-
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleEnter = () => {
@@ -39,7 +38,6 @@ export default function WorkCard({
 
   return (
     <div className="relative w-full break-inside-avoid">
-
       {/* SVG ACCENT BACKGROUND */}
       {accentSvg && (
         <img
@@ -58,13 +56,11 @@ export default function WorkCard({
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
-
         {/* IMAGE PREVIEW */}
         <img
           src={src}
           alt=""
           className={`block w-full h-auto object-cover ${imageClassName}`}
-       
         />
 
         {/* HOVER VIDEO */}
@@ -80,9 +76,7 @@ export default function WorkCard({
             <source src={video} type="video/mp4" />
           </video>
         )}
-
       </div>
-
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import WorkCard from "./workCard";
-import { works } from "@/app/data/works"; // adjust path if needed
+import { works } from "@/app/data/works";
 
 export default function WorkGrid() {
   return (

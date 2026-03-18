@@ -1,16 +1,44 @@
-'use client';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { VideoCard } from '../components/videoCard';
+"use client";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { VideoCard } from "../components/videoCard";
 
 export default function PortfolioPage() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
+  useEffect(() => {
+    const clone = (window as any).__portfolioClone;
+    const target = document.getElementById("portfolio-target");
+
+    if (!clone || !target) return;
+
+    const rect = target.getBoundingClientRect();
+
+    gsap.to(clone, {
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      x: 0,
+      scale: 1,
+      duration: 0.6,
+      ease: "power3.out",
+      onComplete: () => {
+        target.style.opacity = "1";
+        clone.remove();
+        (window as any).__portfolioClone = null;
+      },
+    });
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-[#111111] text-[#f7f2eb] font-sans overflow-x-hidden">
-
       {/* Background Floating Elements */}
-      <div className="absolute inset-0 pointer-events-none select-none opacity-40 lg:opacity-80" aria-hidden="true">
+      <div
+        className="absolute inset-0 pointer-events-none select-none opacity-40 lg:opacity-80"
+        aria-hidden="true"
+      >
         {/* Clapboard */}
         <div className="absolute top-[2%] left-[5%] scale-75">
           <img
@@ -44,13 +72,15 @@ export default function PortfolioPage() {
       </div>
 
       <main className="relative z-10 max-w-[800px] mx-auto px-6 py-12">
-        <h1 className="text-center font-[900] text-[64px] md:text-[80px] mb-12 leading-none tracking-[-0.04em] text-[#f5f5f5]">
+        <h1
+          id="portfolio-target"
+          className="opacity-0 text-center font-[900] text-[64px] md:text-[80px] mb-12 leading-none tracking-[-0.04em] text-[#f5f5f5]"
+        >
           Portfolio
         </h1>
 
         {/* --- BRAND WORKS --- */}
         <section className="flex flex-col items-center mb-20">
-
           <div className="flex -space-x-8 mb-4 scale-90 md:scale-100">
             <div className="w-35 h-35 rounded-full border-2 border-white/20 shadow-xl flex items-center justify-center z-30 overflow-hidden">
               <Image
@@ -104,7 +134,9 @@ export default function PortfolioPage() {
               className="w-[320px] rounded-xl"
             >
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-center">
-                <h2 className="text-lg font-semibold">Brand Integration Demo</h2>
+                <h2 className="text-lg font-semibold">
+                  Brand Integration Demo
+                </h2>
                 <p className="text-sm text-white/80">Polls For iMessage</p>
               </div>
             </VideoCard>
@@ -154,9 +186,17 @@ export default function PortfolioPage() {
         {/* Jesse Vasquez */}
         <section className="flex flex-col items-center mb-20">
           <div className="w-35 h-35 rounded-full border-4 border-gray-700 overflow-hidden shadow-2xl mb-4 bg-zinc-800">
-            <Image src="/images/Jesse Vasquez.png" alt="Jesse Vasquez" width={150} height={150} className="object-cover" />
+            <Image
+              src="/images/Jesse Vasquez.png"
+              alt="Jesse Vasquez"
+              width={150}
+              height={150}
+              className="object-cover"
+            />
           </div>
-          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">Jesse Vasquez</h2>
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">
+            Jesse Vasquez
+          </h2>
           {/* horizontal videos */}
           <div className="flex flex-col gap-4 items-center">
             <div className="flex justify-center gap-4">
@@ -207,9 +247,17 @@ export default function PortfolioPage() {
         {/* --- CRICFLIX --- */}
         <section className="flex flex-col items-center mb-20">
           <div className="w-35 h-35 rounded-full border-4 border-gray-700 overflow-hidden shadow-2xl mb-4 bg-zinc-800">
-            <Image src="/images/CricFlix.png" alt="Jesse Vasquez" width={150} height={150} className="object-cover" />
+            <Image
+              src="/images/CricFlix.png"
+              alt="Jesse Vasquez"
+              width={150}
+              height={150}
+              className="object-cover"
+            />
           </div>
-          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">CricFlix</h2>
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">
+            CricFlix
+          </h2>
           <div className="flex flex-wrap justify-center gap-4">
             <VideoCard
               thumbnail="/images/CricFlix_Link(1).png"
@@ -229,9 +277,17 @@ export default function PortfolioPage() {
         {/* --- DAYANA PLAYS --- */}
         <section className="flex flex-col items-center">
           <div className="w-35 h-35 rounded-full border-4 border-gray-700 overflow-hidden shadow-2xl mb-4 bg-zinc-800">
-            <Image src="/images/Dayana Plays.png" alt="Jesse Vasquez" width={150} height={150} className="object-cover" />
+            <Image
+              src="/images/Dayana Plays.png"
+              alt="Jesse Vasquez"
+              width={150}
+              height={150}
+              className="object-cover"
+            />
           </div>
-          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">Dayana Plays</h2>
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">
+            Dayana Plays
+          </h2>
           <div className="flex justify-center gap-3">
             <VideoCard
               thumbnail="/images/Dayana Plays_Link (1).png"
@@ -253,12 +309,10 @@ export default function PortfolioPage() {
             />
           </div>
         </section>
-
       </main>
       {activeVideo && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center px-4">
           <div className="relative w-[600px] max-w-4xl aspect-video bg-black rounded-xl overflow-hidden">
-
             <button
               onClick={() => setActiveVideo(null)}
               className="absolute top-3 right-3 z-10 bg-white/20 px-3 py-1 rounded-full text-white"
