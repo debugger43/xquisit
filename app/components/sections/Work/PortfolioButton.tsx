@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Lottie from "lottie-react";
 import animationData from "@/public/lottie/portfolio-button.json";
 
@@ -10,6 +9,7 @@ export default function PortfolioButton() {
   const lottieRef = useRef<any>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false); 
   const router = useRouter();
 
   const segments = {
@@ -18,21 +18,42 @@ export default function PortfolioButton() {
     click: [119, 240],
   };
 
+
   useEffect(() => {
     const anim = lottieRef.current;
-    if (!anim) return;
+    if (!anim || !isLoaded) return;
 
     anim.loop = true;
-    anim.playSegments(segments.idle, true);
-  }, []);
 
+    const start = segments.idle[0] || 0;
+    const end = segments.idle[1] || start + 1;
+
+    try {
+      anim.goToAndStop(start, true);
+      anim.playSegments([start, end], true);
+    } catch (e) {
+      console.warn("Lottie init error:", e);
+    }
+  }, [isLoaded]);
+
+  
   const playSegment = (segment: number[], loop = false) => {
     const anim = lottieRef.current;
-    if (!anim) return;
+    if (!anim || !isLoaded || !Array.isArray(segment)) return;
+
+    const start = isNaN(segment[0]) ? 0 : segment[0];
+    const end = isNaN(segment[1]) ? start + 1 : segment[1];
+
+    if (start === end) return;
 
     anim.loop = loop;
-    anim.goToAndStop(segment[0], true);
-    anim.playSegments(segment, true);
+
+    try {
+      anim.goToAndStop(start, true);
+      anim.playSegments([start, end], true);
+    } catch (e) {
+      console.warn("Lottie error prevented:", e);
+    }
   };
 
   return (
@@ -53,7 +74,6 @@ export default function PortfolioButton() {
           if (!source) return;
 
           const textRect = source.getBoundingClientRect();
-
           const clone = source.cloneNode(true) as HTMLElement;
 
           clone.style.position = "fixed";
@@ -100,7 +120,7 @@ export default function PortfolioButton() {
                 duration: 0.9,
                 ease: "power4.inOut",
               },
-              0,
+              0
             );
 
             tl.to(el, {
@@ -118,7 +138,7 @@ export default function PortfolioButton() {
                 duration: 0.4,
                 ease: "power2.out",
               },
-              "-=0.3",
+              "-=0.3"
             );
 
             tl.to({}, { duration: 0.2 });
@@ -138,16 +158,27 @@ export default function PortfolioButton() {
           Portfolio
         </span>
 
-        <Lottie
-          lottieRef={lottieRef}
-          animationData={animationData}
-          autoplay={false}
-          loop={false}
-          style={{ width: "100%", height: "100%" }}
-        />
+   
+  <Lottie
+  lottieRef={lottieRef}
+  animationData={animationData}
+  autoplay={false}
+  loop={false}
+  onDOMLoaded={() => {
+    setIsLoaded(true);
+
+    // FORCE REMOVED ALL FILTERS 
+    const svg = lottieRef.current?.container?.querySelector("svg");
+    if (svg) {
+      const filters = svg.querySelectorAll("filter");
+      filters.forEach((f: any) => f.remove());
+    }
+  }}
+  style={{ width: "100%", height: "100%" }}
+/>
       </div>
 
-      {/*OVERLAY*/}
+      {/* OVERLAY */}
       {isTransitioning && (
         <div className="fixed inset-0 bg-black z-[9998] pointer-events-none animate-fadeIn" />
       )}
