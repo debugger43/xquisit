@@ -1,26 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Play } from "lucide-react";
 import { VideoCard } from '../components/videoCard';
-
-interface CardProps {
-  type: 'landscape' | 'portrait';
-  imageSrc?: string;
-  title?: string;
-  subtitle?: string;
-  overlayText?: string;
-  overlayBg?: string;
-}
-
-
-const PlayButton = () => (
-  <div className="absolute inset-0 m-auto w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm z-20 flex items-center justify-center border border-white/30">
-    <div className="ml-1 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[10px] border-l-white" />
-  </div>
-);
-
-// --- Main Page ---
 
 export default function PortfolioPage() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
@@ -28,9 +9,9 @@ export default function PortfolioPage() {
   return (
     <div className="relative min-h-screen bg-[#111111] text-[#f7f2eb] font-sans overflow-x-hidden">
 
-      {/* 1. Background Floating Elements (Static CSS Art) */}
+      {/* Background Floating Elements */}
       <div className="absolute inset-0 pointer-events-none select-none opacity-40 lg:opacity-80" aria-hidden="true">
-        {/* Clapboard (Top Left) */}
+        {/* Clapboard */}
         <div className="absolute top-[2%] left-[5%] scale-75">
           <img
             src="/images/Clapboard.png"
@@ -39,14 +20,14 @@ export default function PortfolioPage() {
           />
         </div>
 
-        {/* Color Bars (Mid Right) */}
+        {/* Color Bars */}
         <div className="absolute top-[40%] right-10 w-[300px] h-[200px] rounded-lg">
           <img src="/images/brick_design.png" alt="" />
         </div>
 
         {/* Geometric Shapes */}
         <div className="absolute top-[12%] right-[15%] w-6 h-6 bg-yellow-600/80 rotate-25" />
-        <div className="absolute top-[25%] left-[15%] w-12 h-12 rounded-full border-2 border-purple-500" />
+        <div className="absolute top-[22%] left-[15%] w-12 h-12 rounded-full border-2 border-purple-500" />
         <div className="absolute top-[27%] right-[12%] w-8 h-8 rounded-full border-2 border-green-300" />
 
         <div className="absolute bottom-[35%] left-[8%] w-5 h-5 bg-green-600/80 rotate-25" />
@@ -63,7 +44,7 @@ export default function PortfolioPage() {
       </div>
 
       <main className="relative z-10 max-w-[800px] mx-auto px-6 py-12">
-        <h1 className="text-center font-['Fredoka'] font-extrabold text-5xl md:text-6xl mb-12 tracking-tight drop-shadow-lg">
+        <h1 className="text-center font-[900] text-[64px] md:text-[80px] mb-12 leading-none tracking-[-0.04em] text-[#f5f5f5]">
           Portfolio
         </h1>
 
@@ -101,8 +82,9 @@ export default function PortfolioPage() {
               />
             </div>
           </div>
-          <h2 className="font-['Fredoka'] font-bold text-2xl mb-6">Brand Works</h2>
-
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">
+            Brand Works
+          </h2>
           <div className="flex flex-wrap justify-center gap-4">
             <VideoCard
               thumbnail="/images/Link.png"
@@ -142,7 +124,7 @@ export default function PortfolioPage() {
             />
           </div>
 
-          <h2 className="font-['Fredoka'] font-bold text-2xl mb-6">
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">
             Codie Sanchez
           </h2>
 
@@ -174,7 +156,7 @@ export default function PortfolioPage() {
           <div className="w-35 h-35 rounded-full border-4 border-gray-700 overflow-hidden shadow-2xl mb-4 bg-zinc-800">
             <Image src="/images/Jesse Vasquez.png" alt="Jesse Vasquez" width={150} height={150} className="object-cover" />
           </div>
-          <h2 className="font-['Fredoka'] font-bold text-2xl mb-6">Jesse Vasquez</h2>
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">Jesse Vasquez</h2>
           {/* horizontal videos */}
           <div className="flex flex-col gap-4 items-center">
             <div className="flex justify-center gap-4">
@@ -227,7 +209,7 @@ export default function PortfolioPage() {
           <div className="w-35 h-35 rounded-full border-4 border-gray-700 overflow-hidden shadow-2xl mb-4 bg-zinc-800">
             <Image src="/images/CricFlix.png" alt="Jesse Vasquez" width={150} height={150} className="object-cover" />
           </div>
-          <h2 className="font-['Fredoka'] font-bold text-2xl mb-6">CricFlix</h2>
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">CricFlix</h2>
           <div className="flex flex-wrap justify-center gap-4">
             <VideoCard
               thumbnail="/images/CricFlix_Link(1).png"
@@ -249,7 +231,7 @@ export default function PortfolioPage() {
           <div className="w-35 h-35 rounded-full border-4 border-gray-700 overflow-hidden shadow-2xl mb-4 bg-zinc-800">
             <Image src="/images/Dayana Plays.png" alt="Jesse Vasquez" width={150} height={150} className="object-cover" />
           </div>
-          <h2 className="font-['Fredoka'] font-bold text-2xl mb-6">Dayana Plays</h2>
+          <h2 className="text-center font-[700] text-[28px] md:text-[34px] mb-6 leading-none tracking-[-0.02em] text-[#f5f5f5]">Dayana Plays</h2>
           <div className="flex justify-center gap-3">
             <VideoCard
               thumbnail="/images/Dayana Plays_Link (1).png"
