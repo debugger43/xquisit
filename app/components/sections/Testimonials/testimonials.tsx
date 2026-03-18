@@ -213,7 +213,7 @@ export default function Testimonials() {
     >
       {/* GLOW CURVE BACKGROUND */}
 
-      {/* <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
         <svg
           width="1920"
           height="1080"
@@ -259,7 +259,7 @@ export default function Testimonials() {
             />
           </g>
         </svg>
-      </div> */}
+      </div>
       <div className="relative z-10 h-full overflow-hidden">
         <div ref={trackRef} className="flex w-[200vw] h-full">
           {/* SLIDE 1 */}
