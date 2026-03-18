@@ -2,8 +2,6 @@
 
 import WorkGrid from "./workGrid";
 import { useLayoutEffect, useRef } from "react";
-import { useState } from "react";
-import VideoModal from "@/app/components/VideoModal";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -13,10 +11,11 @@ export default function WorkSection() {
   const curveRef = useRef<SVGPathElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const [isClosing, setIsClosing] = useState(false);
 
   useLayoutEffect(() => {
+    /* -------------------------------
+       CURVE DRAW ANIMATION
+    -------------------------------- */
     if (curveRef.current) {
       const length = curveRef.current.getTotalLength();
 
@@ -37,6 +36,9 @@ export default function WorkSection() {
       });
     }
 
+    /* -------------------------------
+       HERO-STYLE HEADING ANIMATION
+    -------------------------------- */
     if (headingRef.current) {
       const words = headingRef.current.querySelectorAll("span");
 
@@ -61,42 +63,37 @@ export default function WorkSection() {
       });
     }
 
-    if (gridRef.current) {
-      const cards = gridRef.current.querySelectorAll(".work-item");
-      gsap.set(cards, {
-        opacity: 0,
-        scale: 0.6,
-      });
+    /* -------------------------------
+       WORK CARDS ANIMATION
+    -------------------------------- */
+ if (gridRef.current) {
+  const cards = gridRef.current.querySelectorAll(".work-item");
+gsap.set(cards, {
+  opacity: 0,
+  scale: 0.6,
+});
 
-      gsap.to(cards, {
-        opacity: 1,
-        scale: 1,
-        duration: 1.2,
-        ease: "elastic.out(1.2, 0.45)",
-        stagger: 0.14,
-        delay: 1,
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: "top 90%",
-          once: true,
-        },
-      });
-    }
+gsap.to(cards, {
+  opacity: 1,
+  scale: 1,
+  duration: 1.2,
+  ease: "elastic.out(1.2, 0.45)",
+  stagger: 0.14,
+  delay: 1,
+  scrollTrigger: {
+    trigger: gridRef.current,
+    start: "top 90%",
+    once: true,
+  },
+});
+}
   }, []);
 
-  const handleClose = () => {
-    setIsClosing(true);
-
-    setTimeout(() => {
-      setActiveVideo(null);
-      setIsClosing(false);
-    }, 300); // match animation duration
-  };
   return (
-    <section
-      id="works"
-      data-cursor="green"
-      className="relative h-[var(--app-height)] w-full overflow-hidden bg-black">
+    <section 
+    id="works"
+    data-cursor="green"
+    className="relative h-[var(--app-height)] w-full overflow-hidden bg-black">
 
       {/* GRID BACKGROUND */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -159,15 +156,16 @@ export default function WorkSection() {
 
       {/* HEADING */}
       <div className="absolute top-[6vh] left-1/2 -translate-x-1/2 w-[92vw] max-w-[1500px] text-center pointer-events-none z-10">
-        <h2
+        <h2 
           ref={headingRef}
           className="font-[900] text-[clamp(16px,5vw,72px)] leading-[1.1] text-white whitespace-nowrap"
         >
           {"Different Styles, Same Excellence".split(" ").map((word, i) => (
             <span
               key={i}
-              className={`inline-block mr-[0.35em] ${word === "Excellence" ? "text-brand" : ""
-                }`}
+              className={`inline-block mr-[0.35em] ${
+                word === "Excellence" ? "text-brand" : ""
+              }`}
             >
               {word}
             </span>
@@ -180,16 +178,9 @@ export default function WorkSection() {
         ref={gridRef}
         className="mx-auto mt-[12vh] w-[min(86vw,1520px)] h-[90vh] overflow-hidden relative z-10"
       >
-        <WorkGrid onVideoClick={(video) => setActiveVideo(video)} />
+        <WorkGrid />
       </div>
 
-      {activeVideo && (
-        <VideoModal
-          video={activeVideo}
-          onClose={handleClose}
-          isClosing={isClosing}
-        />
-      )}
     </section>
   );
 }
