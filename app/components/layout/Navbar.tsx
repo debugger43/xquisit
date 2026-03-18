@@ -16,12 +16,10 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-  
       if (window.innerWidth < 768) return;
 
       if (!navbarRef.current) return;
 
-      
       if (currentScroll <= 10) {
         gsap.to(navbarRef.current, {
           y: 0,
@@ -32,24 +30,21 @@ export default function Navbar() {
         return;
       }
 
-  if (currentScroll > lastScroll) {
-  
-  gsap.to(navbarRef.current, {
-    y: "-100%",
-    duration: 0.55,         
-    delay: 0.08,             
-    ease: "power3.out",      
-  });
-} else {
-  
- 
-  gsap.to(navbarRef.current, {
-    y: 0,
-    duration: 0.55,
-    delay: 0.06,
-    ease: "power2.out",
-  });
-}
+      if (currentScroll > lastScroll) {
+        gsap.to(navbarRef.current, {
+          y: "-100%",
+          duration: 0.55,
+          delay: 0.08,
+          ease: "power3.out",
+        });
+      } else {
+        gsap.to(navbarRef.current, {
+          y: 0,
+          duration: 0.55,
+          delay: 0.06,
+          ease: "power2.out",
+        });
+      }
 
       lastScroll = currentScroll;
     };
@@ -66,16 +61,17 @@ export default function Navbar() {
         className="fixed top-0 left-0 w-full z-[997] bg-black"
       >
         <nav className="max-w-[1400px] mx-auto px-4 h-[59px] flex items-center justify-between">
-
           {/* LOGO */}
-          <Image
-            src="/logo.png"
-            width={140}
-            height={40}
-            alt="Xquisit Logo"
-            priority
-            className="select-none w-[110px] md:w-[140px]"
-          />
+          <div className="relative w-[110px] md:w-[140px] h-[40px]">
+            <Image
+              src="/logo.png"
+              alt="Xquisit Logo"
+              fill
+              priority
+              sizes="(max-width: 768px) 110px, 140px"
+              className="object-contain"
+            />
+          </div>
 
           {/* DESKTOP LINKS */}
           <div className="hidden md:block">
@@ -94,7 +90,6 @@ export default function Navbar() {
           >
             ☰
           </button>
-
         </nav>
       </header>
 
