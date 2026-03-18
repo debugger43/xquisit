@@ -4,6 +4,7 @@ import WorkGrid from "./workGrid";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import PortfolioButton from "./PortfolioButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -180,6 +181,11 @@ gsap.to(cards, {
       >
         <WorkGrid />
       </div>
+
+      {/* FLOATING PORTFOLIO BUTTON
+<div className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 z-20">
+  <PortfolioButton />
+</div> */}
 
     </section>
   );
