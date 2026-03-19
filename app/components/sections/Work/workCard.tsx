@@ -52,7 +52,7 @@ export default function WorkCard({
 
       {/* FRONT CARD */}
       <div
-        className="relative z-10 overflow-hidden rounded-2xl border-3 border-white bg-black transition-transform duration-300 hover:scale-[1.10]"
+        className="relative z-10 overflow-hidden rounded-2xl border-3 border-white bg-black transition-transform duration-300"
         // onMouseEnter={handleEnter}
         // onMouseLeave={handleLeave}
       >
