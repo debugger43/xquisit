@@ -23,12 +23,12 @@ export default function WorkCard({
 }: WorkCardProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const handleEnter = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    }
-  };
+  // const handleEnter = () => {
+  //   if (videoRef.current) {
+  //     videoRef.current.currentTime = 0;
+  //     videoRef.current.play();
+  //   }
+  // };
 
   const handleLeave = () => {
     if (videoRef.current) {
@@ -53,8 +53,8 @@ export default function WorkCard({
       {/* FRONT CARD */}
       <div
         className="relative z-10 overflow-hidden rounded-2xl border-3 border-white bg-black transition-transform duration-300 hover:scale-[1.10]"
-        onMouseEnter={handleEnter}
-        onMouseLeave={handleLeave}
+        // onMouseEnter={handleEnter}
+        // onMouseLeave={handleLeave}
       >
         {/* IMAGE PREVIEW */}
         <img
@@ -64,7 +64,7 @@ export default function WorkCard({
         />
 
         {/* HOVER VIDEO */}
-        {video && (
+        {/* {video && (
           <video
             ref={videoRef}
             muted
@@ -75,7 +75,7 @@ export default function WorkCard({
           >
             <source src={video} type="video/mp4" />
           </video>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ export default function PortfolioButton() {
   const lottieRef = useRef<any>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false); 
+  const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   const segments = {
@@ -36,7 +36,7 @@ export default function PortfolioButton() {
     }
   }, [isLoaded]);
 
-  
+
   const playSegment = (segment: number[], loop = false) => {
     const anim = lottieRef.current;
     if (!anim || !isLoaded || !Array.isArray(segment)) return;
@@ -60,7 +60,8 @@ export default function PortfolioButton() {
     <>
       <div
         ref={wrapperRef}
-        className="w-[clamp(160px,28vw,400px)] cursor-pointer will-change-transform rounded-full overflow-hidden"
+        data-clickable
+        className="w-[clamp(160px,28vw,400px)] cursor-pointer will-change-transform rounded-full overflow-hidden z-1000"
         onMouseEnter={() => playSegment(segments.hover)}
         onMouseLeave={() => playSegment(segments.idle, true)}
         onClick={() => {
@@ -158,24 +159,24 @@ export default function PortfolioButton() {
           Portfolio
         </span>
 
-   
-  <Lottie
-  lottieRef={lottieRef}
-  animationData={animationData}
-  autoplay={false}
-  loop={false}
-  onDOMLoaded={() => {
-    setIsLoaded(true);
 
-    // FORCE REMOVED ALL FILTERS 
-    const svg = lottieRef.current?.container?.querySelector("svg");
-    if (svg) {
-      const filters = svg.querySelectorAll("filter");
-      filters.forEach((f: any) => f.remove());
-    }
-  }}
-  style={{ width: "100%", height: "100%" }}
-/>
+        <Lottie
+          lottieRef={lottieRef}
+          animationData={animationData}
+          autoplay={false}
+          loop={false}
+          onDOMLoaded={() => {
+            setIsLoaded(true);
+
+            // FORCE REMOVED ALL FILTERS 
+            const svg = lottieRef.current?.container?.querySelector("svg");
+            if (svg) {
+              const filters = svg.querySelectorAll("filter");
+              filters.forEach((f: any) => f.remove());
+            }
+          }}
+          style={{ width: "100%", height: "100%" }}
+        />
       </div>
 
       {/* OVERLAY */}
