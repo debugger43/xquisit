@@ -46,6 +46,7 @@ export default function VideoShowreelSection() {
       onStart: () => {
         videoRef.current!.style.pointerEvents = "auto";
         videoRef.current!.currentTime = 0;
+        videoRef.current!.muted = true;
         videoRef.current!.play();
       },
     });
@@ -161,65 +162,7 @@ export default function VideoShowreelSection() {
           .to(cornerRightRef.current, { strokeDashoffset: 0, duration: 1.5 }, 0)
           .to(playRef.current, { opacity: 1, scale: 1, duration: 0.5 }, 0);
       }
-      if (videoRef.current && sectionRef.current) {
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: "top 50%",
-          end: "bottom 50%",
-          onLeave: () => {
-            if (!videoRef.current) return;
-
-            gsap.to(videoRef.current, {
-              opacity: 0.3,
-              filter: "blur(10px)", 
-              duration: 0.4,
-              ease: "power2.out",
-              onComplete: () => {
-                videoRef.current?.pause();
-              },
-            });
-          },
-
-          onLeaveBack: () => {
-            if (!videoRef.current) return;
-
-            gsap.to(videoRef.current, {
-              opacity: 0.3,
-              filter: "blur(10px)",
-              duration: 0.4,
-              ease: "power2.out",
-              onComplete: () => {
-                videoRef.current?.pause();
-              },
-            });
-          },
-
-          onEnter: () => {
-            if (videoRef.current?.style.pointerEvents === "auto") {
-              videoRef.current.play();
-
-              gsap.to(videoRef.current, {
-                opacity: 1,
-                filter: "blur(0px)", 
-                duration: 0.4,
-                ease: "power2.out",
-              });
-            }
-          },
-          onEnterBack: () => {
-            if (videoRef.current?.style.pointerEvents === "auto") {
-              videoRef.current.play();
-
-              gsap.to(videoRef.current, {
-                opacity: 1,
-                filter: "blur(0px)",
-                duration: 0.4,
-                ease: "power2.out",
-              });
-            }
-          },
-        });
-      }
+      
 
       ScrollTrigger.refresh();
     }, sectionRef);
@@ -354,9 +297,10 @@ export default function VideoShowreelSection() {
             <video
               ref={videoRef}
               className="absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none"
-              src="https://res.cloudinary.com/dnlwpwsgh/video/upload/f_auto,q_auto/showreel_v2_2_uefhtr.mp4"
+              src="https://res.cloudinary.com/dnlwpwsgh/video/upload/f_auto,q_auto/showreel_1080P_potyxl.mp4"
               playsInline
               preload="auto"
+              controls={true}
               onEnded={() => {
                 if (!playRef.current) return;
 
