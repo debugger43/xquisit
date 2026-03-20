@@ -1,36 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import gsap from "gsap";
 import { VideoCard } from "../components/videoCard";
 
 export default function PortfolioPage() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
-  useEffect(() => {
-    const clone = (window as any).__portfolioClone;
-    const target = document.getElementById("portfolio-target");
-
-    if (!clone || !target) return;
-
-    const rect = target.getBoundingClientRect();
-
-    gsap.to(clone, {
-      top: rect.top,
-      left: rect.left,
-      width: rect.width,
-      height: rect.height,
-      x: 0,
-      scale: 1,
-      duration: 0.6,
-      ease: "power3.out",
-      onComplete: () => {
-        target.style.opacity = "1";
-        clone.remove();
-        (window as any).__portfolioClone = null;
-      },
-    });
-  }, []);
 
   return (
     <div className="relative min-h-screen bg-[#111111] text-[#f7f2eb] font-sans overflow-x-hidden">
@@ -74,7 +49,7 @@ export default function PortfolioPage() {
       <main className="relative z-10 max-w-[800px] mx-auto px-6 py-12">
         <h1
           id="portfolio-target"
-          className="opacity-0 text-center font-[900] text-[64px] md:text-[80px] mb-12 leading-none tracking-[-0.04em] text-[#f5f5f5]"
+          className= "text-center font-[900] text-[64px] md:text-[80px] mb-12 leading-none tracking-[-0.04em] text-[#f5f5f5]"
         >
           Portfolio
         </h1>

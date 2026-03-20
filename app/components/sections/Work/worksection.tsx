@@ -12,6 +12,7 @@ export default function WorkSection() {
   const curveRef = useRef<SVGPathElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
+  const portfolioRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     /* -------------------------------
@@ -38,7 +39,7 @@ export default function WorkSection() {
     }
 
     /* -------------------------------
-       HERO-STYLE HEADING ANIMATION
+    HEADING ANIMATION
     -------------------------------- */
     if (headingRef.current) {
       const words = headingRef.current.querySelectorAll("span");
@@ -67,26 +68,46 @@ export default function WorkSection() {
     /* -------------------------------
        WORK CARDS ANIMATION
     -------------------------------- */
-    if (gridRef.current) {
+    if (gridRef.current && portfolioRef.current) {
       const cards = gridRef.current.querySelectorAll(".work-item");
-      gsap.set(cards, {
-        opacity: 0,
-        scale: 0.6,
-      });
 
-      gsap.to(cards, {
-        opacity: 1,
-        scale: 1,
-        duration: 1.2,
-        ease: "elastic.out(1.2, 0.45)",
-        stagger: 0.14,
-        delay: 1,
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: gridRef.current,
           start: "top 90%",
           once: true,
         },
       });
+
+      tl.set(cards, {
+        opacity: 0,
+        scale: 0.6,
+      });
+
+      tl.to(cards, {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: "elastic.out(1.2, 0.45)",
+        stagger: 0.14,
+      });
+
+      // Portfolio button animation
+      tl.fromTo(
+        portfolioRef.current,
+        {
+          opacity: 0,
+          scale: 0.85,
+          y: 40,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 1,
+          ease: "elastic.out(1, 0.45)",
+        },
+      );
     }
   }, []);
 
@@ -190,7 +211,11 @@ export default function WorkSection() {
         <WorkGrid />
 
         {/* PORTFOLIO BUTTON */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div
+          data-clickable
+          ref={portfolioRef}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
           <div className="pointer-events-auto mt-[30%]">
             <PortfolioButton />
           </div>

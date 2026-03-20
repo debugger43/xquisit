@@ -162,7 +162,6 @@ export default function VideoShowreelSection() {
           .to(cornerRightRef.current, { strokeDashoffset: 0, duration: 1.5 }, 0)
           .to(playRef.current, { opacity: 1, scale: 1, duration: 0.5 }, 0);
       }
-      
 
       ScrollTrigger.refresh();
     }, sectionRef);
@@ -354,7 +353,10 @@ export default function VideoShowreelSection() {
             onClick={handlePlayClick}
             className="absolute inset-0 grid place-items-center"
           >
-            <div className="w-24 h-24 rounded-2xl bg-[#4c4dda] grid place-items-center cursor-pointer transition-transform duration-250 ease-out hover:scale-[1.08]">
+            <div
+              data-clickable
+              className="w-24 h-24 rounded-2xl bg-[#4c4dda] grid place-items-center cursor-pointer transition-transform duration-250 ease-out hover:scale-[1.08]"
+            >
               <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
                 <path d="M7 4v16l12-8z" />
               </svg>

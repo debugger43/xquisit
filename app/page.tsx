@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import WorkSection from "@/app/components/sections/Work/worksection";
 import Testimonials from "@/app/components/sections/Testimonials/testimonials";
 import LottieSection from "@/app/components/sections/lottieSection/LottieSection";
+import CTASection from "./components/sections/Cta/CtaSection";
 
 const VideoShowreelSection = dynamic(
   () => import("@/app/components/sections/Showreel/VideoShowreelSection"),
@@ -26,6 +27,8 @@ export default function Home() {
       <Testimonials />
 
       <LottieSection />
+
+      <CTASection />
     </>
   );
 }

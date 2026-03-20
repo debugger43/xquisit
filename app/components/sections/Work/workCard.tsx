@@ -45,7 +45,8 @@ export default function WorkCard({
           alt=""
           className="absolute inset-0 w-full h-full pointer-events-none z-0"
           style={{
-            transform: `translate(${offsetX}px, ${offsetY}px) scale(1.02)`,
+            transform: `translate(${offsetX}px, ${offsetY}px) scale(1.02)`
+           
           }}
         />
       )}

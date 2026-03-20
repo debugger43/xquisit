@@ -5,10 +5,10 @@ export const works = [
     accentSvg: "/elements/works/R1C1-V.svg",
   },
   {
-    src: "/elements/works/work-08.png",
+    src: "/elements/works/work-08-new.png",
     accentSvg: "/elements/works/R2C1-V.svg",
-    offsetX: 60,
-    offsetY: -80,
+    offsetX: 62,
+    offsetY: -9,
   },
   {
     src: "/elements/works/work-02.png",
@@ -17,11 +17,11 @@ export const works = [
     
   },
   {
-    src: "/elements/works/work-05.png",
+    src: "/elements/works/work-05-new.png",
     video: "/elements/works/videos/R2C2.mp4",
     accentSvg: "/elements/works/R2C2-V.svg",
-    offsetX: 59,
-    offsetY: 10,
+    offsetX: 47,
+    offsetY: 12,
   },
   {
     src: "/elements/works/work-03.png",
@@ -34,8 +34,8 @@ export const works = [
     src: "/elements/works/work-06.png",
     video: "/elements/works/videos/R2C3.mp4",
     accentSvg: "/elements/works/R2C3-V.svg",
-    offsetX: 8,
-    offsetY: 2,
+    offsetX: 11,
+    offsetY: -7,
   },
   {
     src: "/elements/works/work-04.webp",
@@ -46,7 +46,7 @@ export const works = [
     src: "/elements/works/work-07.png",
     video: "/elements/works/videos/R2C4.mp4",
     accentSvg: "/elements/works/R2C4-V.svg",
-    offsetX: 17,
+    offsetX: 11,
     offsetY: 8,
   },
 ];
