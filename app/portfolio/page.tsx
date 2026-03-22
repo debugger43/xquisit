@@ -97,10 +97,10 @@ export default function PortfolioPage() {
               onClick={setActiveVideo}
               className="w-[320px] rounded-xl"
             >
-              {/* <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-center">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-center">
                 <h2 className="text-lg font-semibold">Explainer Hype Video</h2>
                 <p className="text-sm text-white/80">Shop with Friends</p>
-              </div> */}
+              </div>
             </VideoCard>
             <VideoCard
               thumbnail="/images/Link (1).png"
@@ -108,12 +108,12 @@ export default function PortfolioPage() {
               onClick={setActiveVideo}
               className="w-[320px] rounded-xl"
             >
-              {/* <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-center">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-center">
                 <h2 className="text-lg font-semibold">
                   Brand Integration Demo
                 </h2>
                 <p className="text-sm text-white/80">Polls For iMessage</p>
-              </div> */}
+              </div>
             </VideoCard>
           </div>
         </section>
