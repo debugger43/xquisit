@@ -127,7 +127,7 @@ export default function CTASection() {
         {/* HEADING */}
         <h2
           ref={headingRef}
-          className="font-radlush font-[400] my-[10px] text-[clamp(18px,5vw,48px)] leading-[1.1] text-black"
+          className="font-radlush font-[450] my-[10px] text-[clamp(18px,5vw,38px)] leading-[1] text-black"
         >
           {"Ready to level up your content?".split(" ").map((word, i) => (
             <span key={i} className="inline-block mr-[0.35em]">
@@ -139,7 +139,7 @@ export default function CTASection() {
         {/* TEXT */}
         <p
           ref={paraRef}
-          className="max-w-[720px] text-[clamp(14px,1.9vw,22px)] text-black/80"
+          className="max-w-[720px] text-[clamp(14px,1.9vw,20px)] text-black/80"
         >
           We’ll take your brand from where it is... to where it deserves to be.
         </p>
