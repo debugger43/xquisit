@@ -27,10 +27,14 @@ export default function CTAButton() {
   const handleLeave = () => {
     lottieRef.current?.playSegments(segments.idle, true);
   };
+const handleClick = () => {
+  lottieRef.current?.playSegments(segments.click, true);
 
-  const handleClick = () => {
-    lottieRef.current?.playSegments(segments.click, true);
-  };
+  setTimeout(() => {
+    window.location.href =
+      "https://calendly.com/ghangas-xquisit/30min";
+  }, 600);
+};
 
   return (
     <div
