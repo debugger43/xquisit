@@ -20,8 +20,6 @@ export default function Hero() {
   const staticItems = allItems.filter((i) => !i.reactive);
 
   useLayoutEffect(() => {
-
-
     navbarRef.current = document.querySelector("[data-navbar]");
 
     /* -------------------------------
@@ -80,8 +78,8 @@ export default function Hero() {
 
         const strength = (1 - distance / maxDistance) * 10;
         gsap.to(proximityInner, {
-          x: dx * 0.008 * strength,
-          y: dy * 0.008 * strength,
+          x: dx * 0.011 * strength,
+          y: dy * 0.011 * strength,
           duration: 0.45,
           ease: "sine.out",
           overwrite: "auto",
@@ -141,7 +139,6 @@ export default function Hero() {
       "-=0.6",
     );
 
-
     if (navbarRef.current) {
       tl.fromTo(
         navbarRef.current,
@@ -196,7 +193,6 @@ export default function Hero() {
     });
 
     return () => {
-     
       window.removeEventListener("mousemove", handleMouseMove);
       gsap.ticker.remove(updateProximity);
       tl.kill();
@@ -209,40 +205,37 @@ export default function Hero() {
     <section
       id="hero"
       data-cursor="green"
-      className="relative w-full h-[var(--app-height)] overflow-hidden bg-black">
-    
+      className="relative w-full h-[var(--app-height)] overflow-hidden bg-black"
+    >
       <span id="hero-anchor" aria-hidden className="absolute top-0 left-0" />
 
-      
       <div
         ref={textRef}
-   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%+45px)] z-[100] text-center pointer-events-none select-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%+45px)] z-[100] text-center pointer-events-none select-none"
       >
         <h1 className="font-[900] tracking-[-0.01em] leading-[0.95]">
-    
-  <span className="block whitespace-nowrap">
-    {"BEYOND SCREENS".split(" ").map((word, i) => (
-      <span
-        key={i}
-        className="inline-block mr-[0.35em] text-white text-[clamp(36px,9vw,120px)]"
-      >
-        {word}
-      </span>
-    ))}
-  </span>
+          <span className="block whitespace-nowrap">
+            {"BEYOND SCREENS".split(" ").map((word, i) => (
+              <span
+                key={i}
+                className="inline-block mr-[0.35em] text-white text-[clamp(36px,9vw,120px)]"
+              >
+                {word}
+              </span>
+            ))}
+          </span>
 
-  <span className="block whitespace-nowrap">
-    {"INTO YOUR HEART".split(" ").map((word, i) => (
-      <span
-        key={i}
-        className="inline-block mr-[0.35em] text-[#bfe3ff] text-[clamp(36px,9vw,120px)]"
-      >
-        {word}
-      </span>
-    ))}
-  </span>
-
-</h1>
+          <span className="block whitespace-nowrap">
+            {"INTO YOUR HEART".split(" ").map((word, i) => (
+              <span
+                key={i}
+                className="inline-block mr-[0.35em] text-[#bfe3ff] text-[clamp(36px,9vw,120px)]"
+              >
+                {word}
+              </span>
+            ))}
+          </span>
+        </h1>
       </div>
 
       {staticItems.map((item, i) => (
