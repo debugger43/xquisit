@@ -58,7 +58,7 @@ export default function Hero() {
         const dx = mouse.current.x - cx;
         const dy = mouse.current.y - cy;
         const distance = Math.hypot(dx, dy);
-        const maxDistance = 150;
+        const maxDistance = 400;
 
         const wasNear = isNearMap.current.get(proximityInner) ?? false;
         const isNear = distance < maxDistance;
@@ -76,10 +76,10 @@ export default function Hero() {
           return;
         }
 
-        const strength = (1 - distance / maxDistance) * 10;
+        const strength = (1 - distance / maxDistance) * 20;
         gsap.to(proximityInner, {
-          x: dx * 0.011 * strength,
-          y: dy * 0.011 * strength,
+          x: dx * 0.015 * strength,
+          y: dy * 0.015 * strength,
           duration: 0.45,
           ease: "sine.out",
           overwrite: "auto",
@@ -152,45 +152,45 @@ export default function Hero() {
     /* -------------------------------
        FLOATING ELEMENTS ENTRY
     -------------------------------- */
-    tl.fromTo(
-      floatRefs.current,
-      {
-        opacity: 0,
-        y: 220,
+     tl.fromTo(
+       floatRefs.current,
+       {
+         opacity: 0,
+         y: 220,
         scale: 0.75,
-        rotation: -18,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        rotation: 0,
-        duration: 0.65,
-        ease: "power3.out",
-      },
-      "-=0.3",
-    );
+         rotation: -18,
+       },
+       {
+         opacity: 1,
+         y: 0,
+         scale: 1,
+         rotation: 0,
+         duration: 0.65,
+         ease: "power3.out",
+       },
+       "-=0.3",
+     );
 
-    tl.set(floatRefs.current, { clearProps: "transform" });
+     tl.set(floatRefs.current, { clearProps: "transform" });
 
-    tl.to(
-      staticRefs.current,
-      {
-        opacity: 1,
-        duration: 1.2,
-        stagger: 0.04,
-        ease: "power2.out",
-      },
-      "+=0.1",
-    );
+     tl.to(
+       staticRefs.current,
+       {
+         opacity: 1,
+         duration: 1.2,
+         stagger: 0.04,
+         ease: "power2.out",
+       },
+       "+=0.1",
+     );
 
     /* -------------------------------
        START IDLE FLOAT FOR REACTIVE ELEMENTS
     -------------------------------- */
-    floatRefs.current.forEach((el, i) => {
-      const inner = el.querySelector(".float-inner");
-      if (inner) startIdleFloat(inner as HTMLElement, i);
-    });
+     floatRefs.current.forEach((el, i) => {
+       const inner = el.querySelector(".float-inner");
+       if (inner) startIdleFloat(inner as HTMLElement, i);
+     });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
