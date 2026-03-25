@@ -139,58 +139,56 @@ export default function Hero() {
       "-=0.6",
     );
 
+    /* -------------------------------
+       FLOATING ELEMENTS ENTRY
+    -------------------------------- */
+    tl.fromTo(
+      floatRefs.current,
+      {
+        opacity: 0,
+        y: 220,
+        scale: 0.75,
+        rotation: -18,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration: 0.65,
+        ease: "power3.out",
+      },
+      "-=0.3",
+    );
     if (navbarRef.current) {
       tl.fromTo(
         navbarRef.current,
         { opacity: 0, y: -16 },
         { opacity: 1, y: 0, duration: 0.9, ease: "sine.out" },
+        "<",
       );
     }
 
-    tl.to({}, { duration: 0.6 });
+    tl.set(floatRefs.current, { clearProps: "transform" });
 
-    /* -------------------------------
-       FLOATING ELEMENTS ENTRY
-    -------------------------------- */
-     tl.fromTo(
-       floatRefs.current,
-       {
-         opacity: 0,
-         y: 220,
-        scale: 0.75,
-         rotation: -18,
-       },
-       {
-         opacity: 1,
-         y: 0,
-         scale: 1,
-         rotation: 0,
-         duration: 0.65,
-         ease: "power3.out",
-       },
-       "-=0.3",
-     );
-
-     tl.set(floatRefs.current, { clearProps: "transform" });
-
-     tl.to(
-       staticRefs.current,
-       {
-         opacity: 1,
-         duration: 1.2,
-         stagger: 0.04,
-         ease: "power2.out",
-       },
-       "+=0.1",
-     );
+    tl.to(
+      staticRefs.current,
+      {
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.04,
+        ease: "power2.out",
+      },
+      "+=0.1",
+    );
 
     /* -------------------------------
        START IDLE FLOAT FOR REACTIVE ELEMENTS
     -------------------------------- */
-     floatRefs.current.forEach((el, i) => {
-       const inner = el.querySelector(".float-inner");
-       if (inner) startIdleFloat(inner as HTMLElement, i);
-     });
+    floatRefs.current.forEach((el, i) => {
+      const inner = el.querySelector(".float-inner");
+      if (inner) startIdleFloat(inner as HTMLElement, i);
+    });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
