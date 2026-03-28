@@ -20,8 +20,6 @@ export default function Hero() {
   const staticItems = allItems.filter((i) => !i.reactive);
 
   useLayoutEffect(() => {
-
-
     navbarRef.current = document.querySelector("[data-navbar]");
 
     /* -------------------------------
@@ -60,7 +58,7 @@ export default function Hero() {
         const dx = mouse.current.x - cx;
         const dy = mouse.current.y - cy;
         const distance = Math.hypot(dx, dy);
-        const maxDistance = 150;
+        const maxDistance = 400;
 
         const wasNear = isNearMap.current.get(proximityInner) ?? false;
         const isNear = distance < maxDistance;
@@ -78,10 +76,10 @@ export default function Hero() {
           return;
         }
 
-        const strength = (1 - distance / maxDistance) * 10;
+        const strength = (1 - distance / maxDistance) * 20;
         gsap.to(proximityInner, {
-          x: dx * 0.008 * strength,
-          y: dy * 0.008 * strength,
+          x: dx * 0.015 * strength,
+          y: dy * 0.015 * strength,
           duration: 0.45,
           ease: "sine.out",
           overwrite: "auto",
@@ -141,17 +139,6 @@ export default function Hero() {
       "-=0.6",
     );
 
-
-    if (navbarRef.current) {
-      tl.fromTo(
-        navbarRef.current,
-        { opacity: 0, y: -16 },
-        { opacity: 1, y: 0, duration: 0.9, ease: "sine.out" },
-      );
-    }
-
-    tl.to({}, { duration: 0.6 });
-
     /* -------------------------------
        FLOATING ELEMENTS ENTRY
     -------------------------------- */
@@ -173,6 +160,14 @@ export default function Hero() {
       },
       "-=0.3",
     );
+    if (navbarRef.current) {
+      tl.fromTo(
+        navbarRef.current,
+        { opacity: 0, y: -16 },
+        { opacity: 1, y: 0, duration: 0.9, ease: "sine.out" },
+        "<",
+      );
+    }
 
     tl.set(floatRefs.current, { clearProps: "transform" });
 
@@ -196,7 +191,6 @@ export default function Hero() {
     });
 
     return () => {
-     
       window.removeEventListener("mousemove", handleMouseMove);
       gsap.ticker.remove(updateProximity);
       tl.kill();
@@ -209,40 +203,37 @@ export default function Hero() {
     <section
       id="hero"
       data-cursor="green"
-      className="relative w-full h-[var(--app-height)] overflow-hidden bg-black">
-    
+      className="relative w-full h-[var(--app-height)] overflow-hidden bg-black"
+    >
       <span id="hero-anchor" aria-hidden className="absolute top-0 left-0" />
 
-      
       <div
         ref={textRef}
-   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%+45px)] z-[100] text-center pointer-events-none select-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%+45px)] z-[100] text-center pointer-events-none select-none"
       >
         <h1 className="font-[900] tracking-[-0.01em] leading-[0.95]">
-    
-  <span className="block whitespace-nowrap">
-    {"BEYOND SCREENS".split(" ").map((word, i) => (
-      <span
-        key={i}
-        className="inline-block mr-[0.35em] text-white text-[clamp(36px,9vw,120px)]"
-      >
-        {word}
-      </span>
-    ))}
-  </span>
+          <span className="block whitespace-nowrap">
+            {"BEYOND SCREENS".split(" ").map((word, i) => (
+              <span
+                key={i}
+                className="inline-block mr-[0.35em] text-white text-[clamp(36px,9vw,120px)]"
+              >
+                {word}
+              </span>
+            ))}
+          </span>
 
-  <span className="block whitespace-nowrap">
-    {"INTO YOUR HEART".split(" ").map((word, i) => (
-      <span
-        key={i}
-        className="inline-block mr-[0.35em] text-[#bfe3ff] text-[clamp(36px,9vw,120px)]"
-      >
-        {word}
-      </span>
-    ))}
-  </span>
-
-</h1>
+          <span className="block whitespace-nowrap">
+            {"INTO YOUR HEART".split(" ").map((word, i) => (
+              <span
+                key={i}
+                className="inline-block mr-[0.35em] text-[#bfe3ff] text-[clamp(36px,9vw,120px)]"
+              >
+                {word}
+              </span>
+            ))}
+          </span>
+        </h1>
       </div>
 
       {staticItems.map((item, i) => (

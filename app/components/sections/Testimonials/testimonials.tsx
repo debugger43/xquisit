@@ -5,11 +5,12 @@ import gsap from "gsap";
 import SplitType from "split-type";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TestimonialCard from "./TestimonialsCard";
+import { testimonialsBg } from "@/app/data/testimonialsBg";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Testimonials() {
-  const curveRef = useRef<SVGPathElement | null>(null);
+  // const curveRef = useRef<SVGPathElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
@@ -22,8 +23,10 @@ export default function Testimonials() {
   const slide1ParagraphRef = useRef<HTMLParagraphElement | null>(null);
   const slide2ParagraphRef = useRef<HTMLDivElement | null>(null);
 
-  useLayoutEffect(() => {
+  const slide1BgRef = useRef<HTMLImageElement[]>([]);
+  const slide2BgRef = useRef<HTMLImageElement[]>([]);
 
+  useLayoutEffect(() => {
     if (!sectionRef.current || !trackRef.current) return;
 
     const slide1Words = slide1HeadingRef.current?.querySelectorAll("span");
@@ -33,30 +36,30 @@ export default function Testimonials() {
 
     let slide2HeadingPlayed = false;
     let slide2CardsPlayed = false;
+    let slide2BgPlayed = false;
 
     /* CURVE INITIAL STATE */
 
-    let curveLength = 0;
+    // let curveLength = 0;
 
-    if (curveRef.current) {
-      curveLength = curveRef.current.getTotalLength();
+    // if (curveRef.current) {
+    //   curveLength = curveRef.current.getTotalLength();
 
-      gsap.set(curveRef.current, {
-        strokeDasharray: curveLength,
-        strokeDashoffset: curveLength
-      });
-    }
+    //   gsap.set(curveRef.current, {
+    //     strokeDasharray: curveLength,
+    //     strokeDashoffset: curveLength,
+    //   });
+    // }
 
     const ctx = gsap.context(() => {
-
       /* SPLIT TEXT */
 
       const slide1Split = new SplitType(slide1ParagraphRef.current!, {
-        types: "words,chars"
+        types: "words,chars",
       });
 
       const slide2Split = new SplitType(slide2ParagraphRef.current!, {
-        types: "words,chars"
+        types: "words,chars",
       });
 
       /* INITIAL STATES */
@@ -64,18 +67,23 @@ export default function Testimonials() {
       gsap.set([slide1Words, slide2Words], {
         opacity: 0,
         y: 20,
-        filter: "blur(8px)"
+        filter: "blur(8px)",
       });
 
       gsap.set([...slide1CardsRef.current, ...slide2CardsRef.current], {
         opacity: 0,
-        scale: 0.7
+        scale: 0.7,
       });
 
       gsap.set([...(slide1Split.chars || []), ...(slide2Split.chars || [])], {
         opacity: 0,
         y: 12,
-        filter: "blur(6px)"
+        filter: "blur(6px)",
+      });
+
+      gsap.set([...slide1BgRef.current, ...slide2BgRef.current], {
+        opacity: 0,
+        filter: "blur(8px)",
       });
 
       /* SLIDE 1 ANIMATIONS */
@@ -90,8 +98,8 @@ export default function Testimonials() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 65%",
-          once: true
-        }
+          once: true,
+        },
       });
 
       gsap.to(slide1CardsRef.current, {
@@ -103,8 +111,8 @@ export default function Testimonials() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 65%",
-          once: true
-        }
+          once: true,
+        },
       });
 
       gsap.to(slide1Split.chars, {
@@ -117,8 +125,22 @@ export default function Testimonials() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 65%",
-          once: true
-        }
+          once: true,
+        },
+      });
+
+      gsap.to(slide1BgRef.current, {
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 1.2,
+        ease: "power3.out",
+        stagger: 0.15,
+        delay: 0.6,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 65%",
+          once: true,
+        },
       });
 
       /* HORIZONTAL SCROLL */
@@ -134,21 +156,19 @@ export default function Testimonials() {
           pin: true,
 
           onUpdate: (self) => {
-
             const p = self.progress;
 
             /* CURVE PROGRESS WITH SCROLL */
 
-            if (curveRef.current) {
-              gsap.set(curveRef.current, {
-                strokeDashoffset: curveLength * (1 - p)
-              });
-            }
+            // if (curveRef.current) {
+            //   gsap.set(curveRef.current, {
+            //     strokeDashoffset: curveLength * (1 - p),
+            //   });
+            // }
 
             /* SLIDE 2 */
 
             if (p > 0.45 && !slide2HeadingPlayed) {
-
               slide2HeadingPlayed = true;
 
               gsap.to(slide2Words, {
@@ -157,13 +177,11 @@ export default function Testimonials() {
                 filter: "blur(0px)",
                 duration: 0.9,
                 ease: "power3.out",
-                stagger: 0.12
+                stagger: 0.12,
               });
-
             }
 
             if (p > 0.55 && !slide2CardsPlayed) {
-
               slide2CardsPlayed = true;
 
               gsap.to(slide2CardsRef.current, {
@@ -171,37 +189,43 @@ export default function Testimonials() {
                 scale: 1,
                 duration: 1,
                 ease: "elastic.out(1,0.5)",
-                stagger: 0.12
+                stagger: 0.12,
               });
-
             }
 
             if (p > 0.65) {
-
               gsap.to(slide2Split.chars, {
                 opacity: 1,
                 y: 0,
                 filter: "blur(0px)",
                 duration: 0.45,
                 ease: "power2.out",
-                stagger: 0.01
+                stagger: 0.01,
               });
-
             }
 
-          }
-        }
+            if (p > 0.7 && !slide2BgPlayed) {
+              slide2BgPlayed = true;
+
+              gsap.to(slide2BgRef.current, {
+                opacity: 1,
+                filter: "blur(0px)",
+                duration: 1.2,
+                ease: "power3.out",
+                stagger: 0.15,
+              });
+            }
+          },
+        },
       });
 
       return () => {
         slide1Split.revert();
         slide2Split.revert();
       };
-
     }, sectionRef);
 
     return () => ctx.revert();
-
   }, []);
 
   return (
@@ -264,23 +288,37 @@ export default function Testimonials() {
         <div ref={trackRef} className="flex w-[200vw] h-full">
           {/* SLIDE 1 */}
 
-          <div className="w-screen h-full flex justify-center">
-
+          <div className="relative w-screen h-full flex justify-center">
             <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
+              <div className="absolute inset-0 z-0 pointer-events-none">
+                {testimonialsBg.slide1.map((item, i) => (
+                  <img
+                    key={i}
+                    src={item.src}
+                    alt=""
+                    ref={(el) => {
+                      if (el) slide1BgRef.current[i] = el;
+                    }}
+                    className={`absolute ${item.className}`}
+                  />
+                ))}
+              </div>
 
               <div className="text-center">
-
                 <h2
                   ref={slide1HeadingRef}
-                  className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
+                  className="font-radlush text-[clamp(20px,4vw,72px)] leading-[100%] font-[900] text-black text-stroke-white whitespace-nowrap"
                 >
                   {"We Don’t Make The Claims, Our Clients Do"
                     .split(" ")
                     .map((word, i) => (
                       <span
                         key={i}
-                        className={`inline-block mr-[10px] ${["Our", "Clients", "Do"].includes(word) ? "text-[#3d318d]" : ""
-                          }`}
+                        className={`inline-block mr-[10px] ${
+                          ["Our", "Clients", "Do"].includes(word)
+                            ? "text-[#3d318d]"
+                            : ""
+                        }`}
                       >
                         {word}
                       </span>
@@ -289,7 +327,6 @@ export default function Testimonials() {
               </div>
 
               <div className="flex justify-center gap-10">
-
                 <TestimonialCard
                   src="/elements/testimonials/test_1.png"
                   ref={(el) => {
@@ -303,60 +340,66 @@ export default function Testimonials() {
                     if (el) slide1CardsRef.current[1] = el;
                   }}
                 />
-
               </div>
 
               <div className="max-w-[1100px]">
-
                 <p
                   ref={slide1ParagraphRef}
-                  className="font-radlush text-[40px] leading-[120%] font-[500] text-black text-balance"
+                  className="font-radlush text-[clamp(30px,4vw,40px)] leading-[120%] font-[500] text-black text-balance"
                 >
                   At Xquisit, we solve what frustrates creators the most:
-                  delays, confusion, and edits that miss the mark. We<br />stay aligned, move
-                  fast, study your niche, and deliver<br />visuals that fit your brand
-                  perfectly. Smooth process,<br /> solid results.
+                  delays, confusion, and edits that miss the mark. We stay
+                  aligned, move fast, study your niche, and deliver visuals that
+                  fit your brand perfectly. Smooth process,
+                  <br /> solid results.
                 </p>
-
               </div>
-
             </div>
-
           </div>
 
           {/* SLIDE 2 */}
 
-          <div className="w-screen h-full flex justify-center">
-
+          <div className="relative w-screen h-full flex justify-center">
             <div className="max-w-[1400px] w-full px-8 pt-[70px] space-y-10">
-
+              <div className="absolute inset-0 z-0 pointer-events-none">
+                {testimonialsBg.slide2.map((item, i) => (
+                  <img
+                    key={i}
+                    src={item.src}
+                    alt=""
+                    ref={(el) => {
+                      if (el) slide2BgRef.current[i] = el;
+                    }}
+                    className={`absolute ${item.className}`}
+                  />
+                ))}
+              </div>
               <div className="text-center">
-
                 <h2
                   ref={slide2HeadingRef}
-                  className="font-radlush text-[57px] leading-[100%] font-[900] text-black text-stroke-white"
+                  className="font-radlush text-[clamp(20px,4vw,72px)] leading-[100%] font-[900] text-black text-stroke-white whitespace-nowrap"
                 >
                   {"We Don’t Make The Claims, Our Clients Do"
                     .split(" ")
                     .map((word, i) => (
                       <span
                         key={i}
-                        className={`inline-block mr-[10px] ${["Our", "Clients", "Do"].includes(word) ? "text-[#3d318d]" : ""
-                          }`}
+                        className={`inline-block mr-[10px] ${
+                          ["Our", "Clients", "Do"].includes(word)
+                            ? "text-[#3d318d]"
+                            : ""
+                        }`}
                       >
                         {word}
                       </span>
                     ))}
                 </h2>
-
               </div>
-
 
               <div
                 ref={slide2ParagraphRef}
-                className="font-radlush text-[40px] leading-[115%] font-[500] text-black max-w-[1400px] mx-auto grid grid-cols-12 gap-y-1 text-balance"
+                className="font-radlush text-[clamp(30px,4vw,40px)] leading-[115%] font-[500] text-black max-w-[1400px] mx-auto grid grid-cols-12 gap-y-1 text-balance"
               >
-
                 <p className="col-start-2 col-span-12">
                   We listen before we edit. We study your tone, your audience,
                 </p>
@@ -368,11 +411,9 @@ export default function Testimonials() {
                 <p className="lg:col-start-3 col-span-10">
                   brand’s heartbeat. We don’t follow rhythm. We create it.
                 </p>
-
               </div>
 
               <div className="flex justify-center gap-10 mt-24">
-
                 <TestimonialCard
                   src="/elements/testimonials/test_3.png"
                   ref={(el) => {
@@ -386,17 +427,11 @@ export default function Testimonials() {
                     if (el) slide2CardsRef.current[1] = el;
                   }}
                 />
-
               </div>
-
             </div>
-
           </div>
-
         </div>
       </div>
-
     </section>
-
   );
 }
